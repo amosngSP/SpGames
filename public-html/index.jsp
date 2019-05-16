@@ -12,7 +12,7 @@
 <style>
 table{
 background-color: black;
-}
+} 
 td,th{
 background-color: white;
 }
@@ -25,7 +25,7 @@ background-color: white;
 Spgames con = new Spgames();
 con.setValues();
 ArrayList<game_entry> games = con.gamesList();
-if (games == null){
+if (games.isEmpty()){
 	out.print("<tr><td colspan='8'>There are no games to show.</td></tr>");
 } else {
 	 StringBuilder tr = new StringBuilder();
@@ -33,7 +33,7 @@ if (games == null){
         game_entry row = games.get(i);
        
         tr.append("<tr>");
-        tr.append("<td>"+row.get_game_title()+"</td>");
+        tr.append("<td><a href='game.jsp?id="+row.get_game_id()+"'>"+row.get_game_title()+"</a></td>");
         tr.append("<td>"+row.get_company()+"</td>");
         tr.append("<td>"+row.get_release_date()+"</td>");
         tr.append("<td>"+row.get_description()+"</td>");

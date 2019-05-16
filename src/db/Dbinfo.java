@@ -8,7 +8,7 @@ public class Dbinfo {
 	static String port = "3306";
 	public static String value(String item) {
 		switch(item) {
-		case "username":
+		case "username": 
 			return username;
 		
 		case "password":
