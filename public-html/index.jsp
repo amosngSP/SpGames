@@ -26,7 +26,7 @@ con.setValues();
 ArrayList<game_entry> games = con.gamesList();
 if (games.isEmpty()){
 	out.print("<tr><td colspan='8'>There are no games to show.</td></tr>");
-} else {
+} else { 
 	 StringBuilder tr = new StringBuilder();
     for (int i = 0; i < games.size(); i++) {
         game_entry row = games.get(i);

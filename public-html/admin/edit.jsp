@@ -58,7 +58,7 @@ margin:auto;
 	if(request.getParameter("fail").equals("3")){
 		%>
 		<div class="alert alert-danger">
-  <strong>Error!</strong> File size too big! Please choose a smaller file.
+  <strong>Error!</strong> File size too big! Please choose a smaller file. 
 </div>
 		<% 
 	}

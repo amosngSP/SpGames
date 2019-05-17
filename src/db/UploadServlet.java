@@ -58,12 +58,12 @@ public class UploadServlet extends HttpServlet {
 					temp.genre_id = Integer.parseInt(s);
 					game.genres.add(temp);
 				}
-				boolean create_game;
+
 				if (inputStream != null) {
-					create_game = dbcon.create_game(game, inputStream);
+					dbcon.create_game(game, inputStream);
 					dbcon.closeConnection();
 				} else {
-					create_game = dbcon.create_game(game, null);
+					dbcon.create_game(game, null);
 					dbcon.closeConnection();
 				}
 

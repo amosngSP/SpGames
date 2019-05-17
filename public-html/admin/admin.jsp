@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="ISO-8859-1"> 
 <title>SPGames - Administration</title>
 </head>
 <body>

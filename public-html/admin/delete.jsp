@@ -12,6 +12,6 @@
 			response.sendRedirect("edit.jsp?fail=2");
 		}
 	} else {
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("index.jsp"); 
 	}
 %>
