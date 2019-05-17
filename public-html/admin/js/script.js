@@ -28,33 +28,18 @@ $('#editModal').on('show.bs.modal', function (event) {
 	  $('select#genres').selectpicker('refresh');
 
 })
-/*
-$(document).ready(function(){	
-$("#modal-form").submit(function(e){
-	console.log("TEST");
-	e.preventDefault();
-	$.post('updateServlet', $('#modal-form').serialize());
-	console.log("is it working");
-	return false;
-	e.preventDefault();
-	 var formData = $(this).serialize();
-	 console.log(formData);
-	 alert(formData);
-     $.ajax({
-         url: 'updateServlet',
-         type: 'POST',
-         data: formData,
-         cache: false,
-         contentType: false,
-         processData: false,
-         success: function () {
-             alert('Form Submitted!');
-         },
-         error: function(){
-             alert("error in ajax form submission");
-         }
-     });
+$('#deleteModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var game_id = button.data('gameid'); // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this);
+  modal.find('.modal-body input#game-id').val(game_id);
 
-     return false;
-});
-});*/
+})
+
+$('#addModal').on('show.bs.modal', function (event) {
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+
+})

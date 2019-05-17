@@ -247,7 +247,11 @@ public class Spgames {
 			System.out.println("crash");
 			e.printStackTrace();
 			return false;
-		}}
+		}
+	}
+	public boolean delete_game(int game_id) throws Exception {
+			return insert_sql("UPDATE `games` SET `del` = 1 WHERE `game_id` = ?",game_id);
+	 }
 	public ArrayList<game_entry> return_all_gamesList() {
 		try {
 			ResultSet rs = select_sql("SELECT * from games");
