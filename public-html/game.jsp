@@ -30,7 +30,7 @@
 <body>
 <% 
 //Printing game info
-out.print(game.get_game_title()+game.get_company()+game.get_description()+game.get_image_location()+game.get_release_date()+game.get_price()+game.get_preowned());
+out.print(game.get_game_title()+game.get_company()+game.get_description()+game.get_release_date()+game.get_price()+game.get_preowned());
 
 %>
 <h1>Comments</h1>
@@ -53,9 +53,7 @@ else {
 <p>Username: <input type="text" name="username"></p>
 <p>Rating: <input type="radio" name="rating" value="0"> 0 Stars<input type="radio" name="rating" value="1"> 1 Star<input type="radio" name="rating" value="2"> 2 Stars<input type="radio" name="rating" value="3"> 3 Stars<input type="radio" name="rating" value="4"> 4 Stars<input type="radio" name="rating" value="5"> 5 Stars</p>
   Review:
-  <textarea name="review">
-  
-  </textarea> <br>
+  <textarea name="review"></textarea> <br>
  <p> <input type="submit" name="submit" value="Submit"></p>
 </form>
 

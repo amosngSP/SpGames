@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-        <%@ page import ="db.Spgames" %>
-        <%@ page import ="db.game_entry" %>
+        <%@ page import ="db.*" %>
         <%@ page import ="java.util.ArrayList" %>
     <%-- This will contain the games --%>
 <!DOCTYPE html>
@@ -38,14 +37,19 @@ if (games.isEmpty()){
         tr.append("<td>"+row.get_release_date()+"</td>");
         tr.append("<td>"+row.get_description()+"</td>");
         tr.append("<td>"+row.get_price()+"</td>");
-        tr.append("<td>"+row.get_image_location()+"</td>");
+       // tr.append("<td>"+row.get_image_location()+"</td>");
+       	tr.append("<td><img src='gameimage.jsp?game_id="+row.get_game_id()+"' width='200'></td>");
         tr.append("<td>");
         for (int j = 0; j < row.get_genres().size(); j++) {
-        	String genre_name = row.get_genres().get(j);
-        	tr.append(genre_name+", ");
+        	genres genre_name = row.get_genres().get(j);
+        	tr.append(genre_name.get_genre_name()+", ");
         }
         tr.append("</td>");
-        tr.append("<td>"+row.get_preowned()+"</td>");
+        if(row.get_preowned() == 0){
+        tr.append("<td>No</td>");
+        } else {
+        tr.append("<td>Yes</td>");
+        }
         tr.append("</tr>");
       }
     out.print(tr.toString());
