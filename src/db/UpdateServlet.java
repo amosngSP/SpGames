@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215)    // upload file's size up to 16MB
 
 public class UpdateServlet extends HttpServlet {
+	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
 		Map<String, String[]> parameters = request.getParameterMap();
@@ -40,8 +41,10 @@ public class UpdateServlet extends HttpServlet {
 		String description = request.getParameter("description");
 		Part filePart = request.getPart("image_file");
 		InputStream inputStream = null;
-		if (filePart != null) {
+		if (filePart.getSize() != 0) {
             inputStream = filePart.getInputStream();
+        } else {
+        	System.out.println("File is null!");
         }
 		game_entry temp = new game_entry();
 		temp.set_game_id(game_id);

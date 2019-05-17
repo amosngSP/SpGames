@@ -24,6 +24,7 @@
 <thead>
 <tr>
 <th>Game ID</th>
+<th>Game Image</th>
 <th>Game Title</th>
 <th>Company Name</th>
 <th>Release Date</th>
@@ -43,6 +44,7 @@ for(game_entry game: game_list){
 %>
 <tr id="<%= game.get_game_id() %>">
 <td><%= game.get_game_id() %></td>
+<td><img src="gameimage.jsp?game_id=<%= game.get_game_id() %>" width="100"></td>
 <td><%= game.get_game_title() %></td>
 <td><%= game.get_company() %></td>
 <td><%= game.get_release_date()%></td>
@@ -76,6 +78,10 @@ for (genres s: game.get_genres()){
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Game Title:</label>
             <input type="text" class="form-control" id="game-title" name="game_title" required>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Image:</label>
+            <input type="file" class="form-control" name="image_file">
           </div>
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Company Name:</label>

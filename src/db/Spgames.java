@@ -80,6 +80,7 @@ public class Spgames {
 			ps.execute();
 			return true;
 		} catch(Exception e){
+			System.out.println("ohno");
 			e.printStackTrace();
 			return false;
 		}
@@ -188,7 +189,7 @@ public class Spgames {
 		}
 		ps.execute();
 		
-		boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `game_genre`.`id` = ?",GameRow.get_game_id());
+		boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `game_id` = ?",GameRow.get_game_id());
 		if(deletegenres) {
 			System.out.println("Delete genres successfully");
 		} else {
@@ -225,7 +226,7 @@ public class Spgames {
 
 		ps.execute();
 		
-		boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `game_genre`.`id` = ?",GameRow.get_game_id());
+		boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `id` = ?",GameRow.get_game_id());
 		if(deletegenres) {
 			System.out.println("Delete genres successfully");
 		} else {
