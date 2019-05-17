@@ -80,8 +80,8 @@ public class Spgames {
 			for (int i = 1; i <= fields.length; i++) {
 				ps.setObject(i, fields[i - 1]);
 			}
-			ps.execute();
-			return true;
+			return ps.execute();
+
 		} catch (Exception e) {
 			System.out.println("ohno");
 			e.printStackTrace();
@@ -93,8 +93,8 @@ public class Spgames {
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setObject(1, field);
-			ps.execute();
-			return true;
+			return ps.execute();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
@@ -201,23 +201,26 @@ public class Spgames {
 			ps.execute();
 
 			boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `game_id` = ?", GameRow.get_game_id());
-			if (deletegenres) {
-				System.out.println("Delete genres successfully");
-			} else {
+			if (!deletegenres) {
 				System.out.println("nothing");
-			}
-			for (genres s : GameRow.genres) {
-				System.out.println(s);
-				Object[] fields = { GameRow.get_game_id(), s.get_genre_id() };
-				boolean insert = insert_sql(
-						"INSERT INTO `game_genre` (`id`, `game_id`, `genre_id`) VALUES (NULL, ?, ?)", fields);
-				if (insert) {
-					System.out.println("success");
-				} else {
-					System.out.println("fail");
+
+			} else {
+				System.out.println("Delete genres successfully");
+
+				for (genres s : GameRow.genres) {
+					System.out.println(s);
+					Object[] fields = { GameRow.get_game_id(), s.get_genre_id() };
+					boolean insert = insert_sql(
+							"INSERT INTO `game_genre` (`id`, `game_id`, `genre_id`) VALUES (NULL, ?, ?)", fields);
+					if (insert) {
+						System.out.println("success");
+					} else {
+						System.out.println("fail");
+					}
 				}
+				return true;
 			}
-			return true;
+			return false;
 		} catch (Exception e) {
 			System.out.println("crash");
 			e.printStackTrace();
@@ -240,14 +243,16 @@ public class Spgames {
 
 			ps.execute();
 
-			boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `id` = ?", GameRow.get_game_id());
-			if (deletegenres) {
-				System.out.println("Delete genres successfully");
-			} else {
+			boolean deletegenres = insert_sql("DELETE FROM `game_genre` WHERE `game_id` = ?", GameRow.get_game_id());
+			if (!deletegenres) {
 				System.out.println("nothing");
+
+			} else {
+
+				System.out.println("Delete genres successfully");
 			}
-			for (genres s : GameRow.genres) {
-				System.out.println(s);
+			for (genres s : GameRow.get_genres()) {
+				System.out.println("Genre: " + s.genre_id);
 				Object[] fields = { GameRow.get_game_id(), s.get_genre_id() };
 				boolean insert = insert_sql(
 						"INSERT INTO `game_genre` (`id`, `game_id`, `genre_id`) VALUES (NULL, ?, ?)", fields);
@@ -257,7 +262,9 @@ public class Spgames {
 					System.out.println("fail");
 				}
 			}
+
 			return true;
+
 		} catch (Exception e) {
 			System.out.println("crash");
 			e.printStackTrace();

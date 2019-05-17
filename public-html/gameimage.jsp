@@ -20,10 +20,9 @@ if (request.getParameter("game_id") != null){
 		response.getOutputStream().write(imagebytes);
 		ByteArrayInputStream bais = new ByteArrayInputStream(imagebytes);
 		String mimeType = URLConnection.guessContentTypeFromStream(bais);
-		System.out.println(mimeType);
 		if (mimeType.startsWith("image/"))
 		{
-			System.out.println("test");
+
 		    response.setContentType(mimeType);
 		}
 	} catch (Exception e){
