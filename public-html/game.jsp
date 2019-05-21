@@ -112,8 +112,8 @@
 			<!-- /MAIN HEADER -->
 		</header>
 		<!-- /HEADER -->
-
-		<!-- NAVIGATION -->
+		
+				<!-- NAVIGATION -->
 		<nav id="navigation">
 			<!-- container -->
 			<div class="container">
@@ -121,7 +121,8 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="index.jsp">Home</a></li> 
+						<li><a href="index.jsp">Home</a></li> 
+						<li><a href="search.jsp">Advanced Search</a></li> 
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -148,7 +149,7 @@
 			</div>
 			<!-- /container -->
 		</div>
-		<!-- /BREADCRUMB -->
+		<!-- /BREADCRUMB --> 
 
 		<!-- SECTION -->
 		<div class="section">
@@ -156,9 +157,20 @@
 			<div class="container">
 				<!-- row --> 
 				<div class="row">
+					<%if (request.getParameter("success") != null){ if(request.getParameter("success").equals("1")){%>
+				<div class="alert alert-success">
+  <strong>Success!</strong> Your comment has been added in.
+</div>	
+<% }else if(request.getParameter("success").equals("0")){
+%>	
+<div class="alert alert-danger">
+  <strong>Error!</strong> An error occurred and your comment wasn't added in.
+</div>	
+<% 
+} }%>
 				<table style="margin:auto;"> 
 				<tr><td colspan="2" style="text-align:center;"><h1><%= game.get_game_title()%></h1></td></tr>
-				<tr><td colspan="2" style="text-align:center;"><img src="gameimage.jsp?game_id=<%= gameid%>"></td></tr>
+				<tr><td colspan="2" style="text-align:center;"><img src="gameimage.jsp?game_id=<%= gameid%>" alt="" style="max-width:80%;"></td></tr>
 				
 				<tr><td style="width: 25%;">
 				<p><label for="preowned">Pre-Owned:</label><% if(game.get_preowned() == 0){out.print("No");} else{out.print("Yes");} %>  </p>
@@ -190,17 +202,7 @@
 				<!-- row -->
 				<div class="row" style="width: 50%; margin:auto;">
 				<h2>Comments</h2> 
-				<%if (request.getParameter("success") != null){ if(request.getParameter("success").equals("1")){%>
-				<div class="alert alert-success">
-  <strong>Success!</strong> Your comment has been added in.
-</div>	
-<% }else if(request.getParameter("success").equals("0")){
-%>	
-<div class="alert alert-danger">
-  <strong>Error!</strong> An error occurred and your comment wasn't added in.
-</div>	
-<% 
-} }%>
+			
 
 				<% 
 //Printing comments
@@ -213,6 +215,7 @@ for (int i = 0; i<comment_list.size(); i++){
 	%>
 	<tr><td>
 	<p><h4><%=row.get_username() %></h4></p>
+	<p><%=row.get_date() %></p>
 	<p>
 	<%
 	for (int j = 0; j != row.get_rating(); j++){

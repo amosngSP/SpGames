@@ -41,7 +41,7 @@ public class UploadServlet extends HttpServlet {
 		if (filePart != null) {
 			System.out.println("File size: " + filePart.getSize());
 			if (filePart.getSize() > 1048576) {
-				response.sendRedirect("edit.jsp?fail=3");
+				response.sendRedirect("editgames.jsp?fail=3");
 			} else {
 				inputStream = filePart.getInputStream();
 
@@ -71,7 +71,7 @@ public class UploadServlet extends HttpServlet {
 
 				// sets the message in request scope
 				// forwards to the message page
-				response.sendRedirect("edit.jsp?success=3");
+				response.sendRedirect("editgames.jsp?success=3");
 			}
 		}
 	}

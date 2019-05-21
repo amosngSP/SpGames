@@ -15,7 +15,76 @@
     </style>
     </head>
 	<body>
-<%@ include file="/etc/body-header.html" %>
+		<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-right">
+						<li><a href="admin"><i class="fas fa-sign-in-alt"></i>Admin Log-in</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<%@ include file="/etc/logo-import.html" %>
+						<!-- /LOGO -->
+
+						<!-- SEARCH BAR -->
+						<%@ include file="/etc/searchbar-import.jsp" %>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+		
+				<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li><a href="index.jsp">Home</a></li> 
+						<li class="active"><a href="search.jsp">Advanced Search</a></li> 
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
 
  
 
@@ -93,7 +162,9 @@
 				String preowned = request.getParameter("pre-owned");
 				if(preowned == null){preowned = "";}
 				Connection conn;
-				conn = dbcon.connection(); 
+				Spgames tempcon = new Spgames();
+				tempcon.setValues();
+				conn = tempcon.connection(); 
 				if(genres != null){
 					//Filter by genre first...
 					String basesql = "SELECT DISTINCT game_id FROM game_genre WHERE genre_id = ?";
@@ -147,7 +218,7 @@
 			<p><label for="price">Price:</label> $<%=rs1.getString("price") %></p>
 			
 			<p><label for="genres">Genres:</label>					<%
-					ResultSet genres_games = dbcon.select_sql("SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id", rs1.getString("game_id"));
+					ResultSet genres_games = tempdb.select_sql("SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id", rs1.getString("game_id"));
 			if(genres_games.next()){
 				out.print(genres_games.getString("genre_name"));
 			}
@@ -214,7 +285,7 @@
 			<p><label for="price">Price:</label> $<%=rs1.getString("price") %></p>
 			
 			<p><label for="genres">Genres:</label>					<%
-					ResultSet genres_games = dbcon.select_sql("SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id", rs1.getString("game_id"));
+					ResultSet genres_games = tempdb.select_sql("SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id", rs1.getString("game_id"));
 			if(genres_games.next()){
 				out.print(genres_games.getString("genre_name"));
 			}

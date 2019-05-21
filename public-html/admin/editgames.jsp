@@ -1,6 +1,6 @@
 <%@include file="header.jsp" %>
       <div class="container-fluid">
-        <h1 class="mt-4">Welcome!</h1>
+        <h1 class="mt-4">Edit Games</h1>
         <%if (request.getParameter("success") != null){
 	if (request.getParameter("success").equals("1")){%>
 <div class="alert alert-success" style="">
@@ -257,7 +257,7 @@ for (genres s: game.get_genres()){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="delete.jsp" method="POST">
+      </div><form id="modal-form" action="delete_games.jsp" method="POST">
       <div class="modal-body">
       <input type="hidden" name="game_id" id="game-id">
         <strong>Are you sure you want to delete this game?</strong>
@@ -284,7 +284,7 @@ for (genres s: game.get_genres()){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="undelete.jsp" method="POST">
+      </div><form id="modal-form" action="undelete_games.jsp" method="POST">
       <div class="modal-body">
       <input type="hidden" name="game_id" id="game-id">
         <strong>Are you sure you want to bring this game back?</strong>

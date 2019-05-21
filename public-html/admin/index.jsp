@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import ="db.Spgames" %>
+    <% if(session.getAttribute("name")!= null){response.sendRedirect("admin.jsp");} %>
          <% 
      if(request.getParameter("btnSubmit") != null){
     	Spgames dbcon = new Spgames();

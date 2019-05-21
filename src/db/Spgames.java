@@ -107,10 +107,9 @@ public class Spgames {
 		try {
 			ResultSet rs = select_sql("SELECT * from users WHERE username = ?", username);
 			if (rs.next()) {
-				String salt = rs.getString("salt");
-				String passwordsalt = rs.getString("password");
-				String salted = passwordhash(password, salt);
-				if (passwordsalt.equalsIgnoreCase(salted)) {
+				String encpassword = rs.getString("password");
+				PassCrypt crypto = new PassCrypt(password, encpassword);
+				if (crypto.get().contentEquals("true")) {
 					return true;
 				} else {
 					return false;
@@ -279,6 +278,8 @@ public class Spgames {
 
 	public boolean undelete_game(int game_id) {
 		try {
+			// Check if game has a deleted genre
+
 			return insert_sql("UPDATE `games` SET `del` = 0 WHERE `game_id` = ?", game_id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -308,7 +309,44 @@ public class Spgames {
 				row.preowned = Integer.parseInt(rs.getString("preowned"));
 				row.deleted = Integer.parseInt(rs.getString("del"));
 				ResultSet rs1 = select_sql(
-						"SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id ",
+						"SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G, genre GE WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND gg.genre_id = GE.genre_id AND GE.del = 0",
+						rs.getString("game_id"));
+				row.genres = new ArrayList<genres>();
+				while (rs1.next()) {
+					genres temp = new genres();
+					temp.genre_id = Integer.parseInt(rs1.getString("genre_id"));
+					temp.genre_name = rs1.getString("genre_name");
+					row.genres.add(temp);
+				}
+				results.add(row);
+			}
+			return results;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public ArrayList<game_entry> return_all_gamesList() {
+		try {
+			ResultSet rs;
+			rs = select_sql("SELECT * from games WHERE del = 0");
+
+			ArrayList<game_entry> results = new ArrayList<game_entry>();
+			while (rs.next()) {
+				game_entry row = new game_entry();
+				row.game_id = Integer.parseInt(rs.getString("game_id"));
+				row.game_title = rs.getString("game_title");
+				row.company = rs.getString("company");
+				row.release_date = rs.getString("release_date");
+				row.description = rs.getString("description");
+				row.price = rs.getString("price");
+				row.preowned = Integer.parseInt(rs.getString("preowned"));
+				row.deleted = Integer.parseInt(rs.getString("del"));
+				ResultSet rs1 = select_sql(
+						"SELECT gg.game_id, G.genre_id, G.genre_name FROM game_genre gg, genre G, genre GE WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND gg.genre_id = GE.genre_id AND GE.del = 0",
 						rs.getString("game_id"));
 				row.genres = new ArrayList<genres>();
 				while (rs1.next()) {
@@ -342,7 +380,7 @@ public class Spgames {
 				row.price = rs.getString("price");
 				row.preowned = Integer.parseInt(rs.getString("preowned"));
 				ResultSet rs1 = select_sql(
-						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id ",
+						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND G.del = 0",
 						rs.getString("game_id"));
 				row.genres = new ArrayList<genres>();
 				while (rs1.next()) {
@@ -375,7 +413,7 @@ public class Spgames {
 				row.price = rs.getString("price");
 				row.preowned = Integer.parseInt(rs.getString("preowned"));
 				ResultSet rs1 = select_sql(
-						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id ",
+						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND G.del = 0 ",
 						rs.getString("game_id"));
 				row.genres = new ArrayList<genres>();
 				while (rs1.next()) {
@@ -408,7 +446,7 @@ public class Spgames {
 				row.price = rs.getString("price");
 				row.preowned = Integer.parseInt(rs.getString("preowned"));
 				ResultSet rs1 = select_sql(
-						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id ",
+						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND G.del = 0 ",
 						rs.getString("game_id"));
 				row.genres = new ArrayList<genres>();
 				while (rs1.next()) {
@@ -440,7 +478,7 @@ public class Spgames {
 				row.price = rs.getString("price");
 				row.preowned = Integer.parseInt(rs.getString("preowned"));
 				ResultSet rs1 = select_sql(
-						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id ",
+						"SELECT gg.game_id, G.genre_name FROM game_genre gg, genre G WHERE gg.game_id = ? AND gg.genre_id = G.genre_id AND G.del = 0",
 						rs.getString("game_id"));
 				row.genres = new ArrayList<genres>();
 				while (rs1.next()) {
@@ -487,9 +525,9 @@ public class Spgames {
 
 			while (genres.next()) {
 				genres row = new genres();
-				row.genre_id = Integer.parseInt(genres.getString(1));
-				row.genre_name = genres.getString(2);
-				row.deleted = Integer.parseInt(genres.getString(3));
+				row.genre_id = Integer.parseInt(genres.getString("genre_id"));
+				row.genre_name = genres.getString("genre_name");
+				row.deleted = Integer.parseInt(genres.getString("del"));
 				genre_list.add(row);
 			}
 			return genre_list;
@@ -507,9 +545,9 @@ public class Spgames {
 
 			while (genres.next()) {
 				genres row = new genres();
-				row.genre_id = Integer.parseInt(genres.getString(1));
-				row.genre_name = genres.getString(2);
-				row.deleted = Integer.parseInt(genres.getString(3));
+				row.genre_id = Integer.parseInt(genres.getString("genre_id"));
+				row.genre_name = genres.getString("genre_name");
+				row.deleted = Integer.parseInt(genres.getString("del"));
 				genre_list.add(row);
 			}
 			return genre_list;
@@ -535,18 +573,18 @@ public class Spgames {
 		}
 	}
 
-	public int update_genre(int genreid, String genrename) {
+	public boolean update_genre(int genreid, String genrename) {
 		try {
 			Object[] tempobj = { genrename, genreid };
 			boolean upd = insert_sql("UPDATE `genre` SET `genre_name` = ? WHERE `genre`.`genre_id` = ?", tempobj);
 			if (upd) {
-				return 0;
+				return true;
 			} else {
-				return -1;
+				return false;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return -1;
+			return false;
 		}
 	}
 
@@ -569,6 +607,22 @@ public class Spgames {
 		}
 	}
 
+	public int undelete_genre(int genreid) {
+		try {
+
+			boolean del = insert_sql("UPDATE `genre` SET `del` = '0' WHERE `genre`.`genre_id` = ?", genreid);
+			if (del) {
+				return 0;
+			} else {
+				return -1;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 	public ArrayList<comment> get_comments(int gameid) {
 		try {
 			ResultSet comments = select_sql("SELECT * from game_comments WHERE game_id = ?", gameid);
@@ -581,6 +635,7 @@ public class Spgames {
 				row.username = comments.getString("username");
 				row.rating = Integer.parseInt(comments.getString("rating"));
 				row.review = comments.getString("review");
+				row.timestamp = comments.getTimestamp("Date");
 				comments_list.add(row);
 			}
 			return comments_list;

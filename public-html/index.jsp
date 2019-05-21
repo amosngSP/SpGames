@@ -13,18 +13,90 @@
 <html lang="en">
 	<head>
 			<title>HEXGEAR - Buy Pre-owned and New Games</title>
-			<%@ include file="/etc/header-import.html" %>
+<%@ include file="/etc/header-import.html" %>
 		<style type="text/css">
 		.product-img{
 	display: flex;
   align-items: center;
   justify-content: center;
 		}
+		.product-img img{
+		max-width:260px;
+		}
 		</style>
     </head>
 	<body>
-<%@ include file="/etc/body-header.html" %>
 
+					<!-- HEADER -->
+		<header>
+			<!-- TOP HEADER -->
+			<div id="top-header">
+				<div class="container">
+					<ul class="header-links pull-right">
+						<li><a href="admin"><i class="fas fa-sign-in-alt"></i>Admin Log-in</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /TOP HEADER -->
+
+			<!-- MAIN HEADER -->
+			<div id="header">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<!-- LOGO -->
+						<%@ include file="/etc/logo-import.html" %>
+						<!-- /LOGO -->
+
+						<!-- SEARCH BAR -->
+						<%@ include file="/etc/searchbar-import.jsp" %>
+						<!-- /SEARCH BAR -->
+
+						<!-- ACCOUNT -->
+						<div class="col-md-3 clearfix">
+							<div class="header-ctn">
+								<!-- Wishlist -->
+								<!-- /Cart -->
+
+								<!-- Menu Toogle -->
+								<div class="menu-toggle">
+									<a href="#">
+										<i class="fa fa-bars"></i>
+										<span>Menu</span>
+									</a>
+								</div>
+								<!-- /Menu Toogle -->
+							</div>
+						</div>
+						<!-- /ACCOUNT -->
+					</div>
+					<!-- row -->
+				</div>
+				<!-- container -->
+			</div>
+			<!-- /MAIN HEADER -->
+		</header>
+		<!-- /HEADER -->
+		
+				<!-- NAVIGATION -->
+		<nav id="navigation">
+			<!-- container -->
+			<div class="container">
+				<!-- responsive-nav -->
+				<div id="responsive-nav">
+					<!-- NAV -->
+					<ul class="main-nav nav navbar-nav">
+						<li class="active"><a href="index.jsp">Home</a></li> 
+						<li><a href="search.jsp">Advanced Search</a></li> 
+					</ul>
+					<!-- /NAV -->
+				</div>
+				<!-- /responsive-nav -->
+			</div>
+			<!-- /container -->
+		</nav>
+		<!-- /NAVIGATION -->
 
 		<% if (games.size()>3||games.size()==3){ %>
 		<div class="section">
@@ -55,8 +127,8 @@
 							<div class="section-nav">
 								<ul class="section-tab-nav tab-nav">
 									<li class="active"><a data-toggle="tab" href="#tab1" id="linktab1">All</a></li>
-									<%if(!preownedgames.isEmpty()){ %><li><a data-toggle="tab" href="#tab2" id="linktab2">Brand New Games</a></li> <% } %>
-									<%if(!newgames.isEmpty()){ %><li><a data-toggle="tab" href="#tab3" id="linktab3">Pre-Owned Games</a></li> <% }%>
+									<%if(!newgames.isEmpty()){ %><li><a data-toggle="tab" href="#tab2" id="linktab2">Brand New Games</a></li> <% } %>
+									<%if(!preownedgames.isEmpty()){ %><li><a data-toggle="tab" href="#tab3" id="linktab3">Pre-Owned Games</a></li> <% }%>
 								</ul>
 							</div>
 						</div>
@@ -69,7 +141,7 @@
 							<div class="products-tabs">
 							
 								<!-- tab -->
-								<div id="tab1" class="tab-pane active">
+								<div role="tabpanel" id="tab1" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 										
 										<% 
@@ -89,7 +161,7 @@ if (games.isEmpty()){
 										<div class="product">
 											<div class="product-img">
 								
-												<img src="gameimage.jsp?game_id=<%= row.get_game_id() %>" alt="" style="">
+												<a href="game.jsp?game_id=<%= row.get_game_id() %>"><img src="gameimage.jsp?game_id=<%= row.get_game_id() %>" alt="" style=""></a>
 												
 											</div>
 											<div class="product-body">
@@ -114,7 +186,7 @@ if (games.isEmpty()){
 								<!-- /tab -->
 								
 																								<!-- tab -->
-								<div id="tab2" class="tab-pane fade" >
+								<div role="tabpanel" id="tab2" class="tab-pane fade" >
 									<div class="products-slick2"  data-nav="#slick-nav-2">
 										
 										<% 
@@ -135,8 +207,8 @@ if (newgames.isEmpty()){
 										<div class="product">
 											<div class="product-img">
 								
-												<img src="gameimage.jsp?game_id=<%= row.get_game_id() %>" alt="" style="">
-												
+												<a href="game.jsp?game_id=<%= row.get_game_id() %>"><img src="gameimage.jsp?game_id=<%= row.get_game_id() %>" alt="" style="">
+												</a>
 											</div>
 											<div class="product-body">
 												<p class="product-category"><% if(row.get_preowned() ==0){out.print("Brand New");} else {out.print("Pre-Owned");} %></p>
@@ -159,7 +231,7 @@ if (newgames.isEmpty()){
 								</div>
 								<!-- /tab -->
 																<!-- tab -->
-								<div id="tab3" class="tab-pane fade" >
+								<div role="tabpanel" id="tab3" class="tab-pane fade" >
 									<div class="products-slick3"  data-nav="#slick-nav-3">
 										
 										<% 
@@ -178,9 +250,9 @@ if (preownedgames.isEmpty()){
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-								
+								<a href="game.jsp?game_id=<%= row.get_game_id() %>">
 												<img src="gameimage.jsp?game_id=<%= row.get_game_id() %>" alt="" style="">
-												
+												</a>
 											</div>
 											<div class="product-body">
 												<p class="product-category"><% if(row.get_preowned() ==0){out.print("Brand New");} else {out.print("Pre-Owned");} %></p>
@@ -221,16 +293,8 @@ if (preownedgames.isEmpty()){
  
 		
 		<script>
-		$(window).ready(function(){
-var divWidth = $('.img1').width(); 
-    $('.img1').height(divWidth);
-});
 
 
-$(window).resize(function(){
-var divWidth = $('.img1').width(); 
-    $('.img1').height(divWidth);
-});
 <%if(newgames.size()!=0){ %>
 $('.products-slick2').each(function() {
 	var $this = $(this),

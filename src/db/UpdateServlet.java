@@ -75,7 +75,7 @@ public class UpdateServlet extends HttpServlet {
 			}
 			System.out.println("Success");
 			dbcon.closeConnection();
-			response.sendRedirect("edit.jsp?success=1");
+			response.sendRedirect("editgames.jsp?success=1");
 
 		} else {
 			System.out.println("Wait what");
