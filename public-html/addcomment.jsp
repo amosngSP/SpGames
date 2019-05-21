@@ -1,7 +1,7 @@
         <%@ page import ="db.*" %>
 <%
+try {
 if(request.getParameter("submit") != null){
-	String prevpage = request.getHeader("referrer");
 	String username = request.getParameter("username");
 	String review = request.getParameter("review");
 	int rating = Integer.parseInt(request.getParameter("rating"));
@@ -14,11 +14,13 @@ if(request.getParameter("submit") != null){
 	Spgames con = new Spgames();
 	con.setValues();
 	if(con.add_comment(cmt)){
-		response.sendRedirect("game.jsp?id="+game_id+"&success=1");
+		response.sendRedirect("game.jsp?game_id="+game_id+"&success=1");
 	} else{
-		response.sendRedirect("game.jsp?id="+game_id+"&success=0");
+		response.sendRedirect("game.jsp?game_id="+game_id+"&success=0");
 	}
 } else{
-	response.sendRedirect("index.jsp");
+	//response.sendRedirect("index.jsp");
+} } catch (Exception e){
+	e.printStackTrace();
 }
 %>

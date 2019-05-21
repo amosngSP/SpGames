@@ -1,15 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <% if(session.getAttribute("name")== null){response.sendRedirect("index.jsp");} %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1"> 
-<title>SPGames - Administration</title>
-</head>
-<body>
-Welcome!<br>
-<a href="addgame.jsp">Add Games</a>
-<a href="logout.jsp">Log Out</a>
-</body>
-</html>
+<%@include file="header.jsp" %>
+      <div class="container-fluid">
+        <h1 class="mt-4">Welcome back, <%= session.getAttribute("name")%></h1>
+        <p>What's on your mind today?</p>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+ 
+<%@include file="footer.jsp" %>
+
+

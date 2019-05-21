@@ -24,7 +24,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<%@ include file="../etc/header-import.html" %>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- jQuery library import -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<!-- Popper library import -->
+<script type="text/javascript" src="js/popper.js"></script>
+<!-- Bootstrap import -->
+<script type="text/javascript" src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+<link href="bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/login.css" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper fadeInDown">
