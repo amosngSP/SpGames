@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Electro - HTML Ecommerce Template</title>
+		<title>HEXGEAR - Buy Pre-owned and New Games</title>
  	<%@ include file="/etc/header-import.html" %>
     <style>
     td{
