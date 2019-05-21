@@ -219,7 +219,7 @@
 			<tr><td rowspan="2" style="width: 1%;">
 			<img src="gameimage.jsp?game_id=<%=rs1.getString("game_id") %>"  style="padding-right: 10px;"width="200"></td>
 			<td colspan="2">
-			<h2><%=rs1.getString("game_title") %></h2>
+			<h2><a href="game.jsp?game_id=<%=rs1.getString("game_id") %>"><%=rs1.getString("game_title") %></a></h2>
 			</td>
 			</tr>
 			

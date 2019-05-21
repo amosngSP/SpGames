@@ -51,7 +51,11 @@
 String error = request.getParameter("login");
 if(error != null){
 	if(error.equals("fail")){
-		out.print("You have entered an invalid ID/Password<br>");
+		%>
+		<div class="alert alert-danger">
+  <strong>Error!</strong> You have entered a invalid username/password.
+</div>
+	<%
 	}
 }
 %>
@@ -60,9 +64,8 @@ if(error != null){
       <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
       <input type="submit" class="fadeIn fourth" name="btnSubmit" value="Log In">
 </form>
-    <!-- Remind Password -->
     <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+      
     </div>
 
   </div>

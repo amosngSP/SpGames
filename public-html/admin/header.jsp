@@ -54,7 +54,7 @@ margin:auto;
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading" style="background-color:black;"><img src="img/logo.png"></div>
+      <div class="sidebar-heading" style="background-color:black;">  <img src="img/logo.png" width="200px"></div>
       <div class="list-group list-group-flush">
         <a href="admin.jsp" class="list-group-item list-group-item-action bg-light">Dashboard</a>
         <a href="editgames.jsp" class="list-group-item list-group-item-action bg-light">Edit Games</a>
