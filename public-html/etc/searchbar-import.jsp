@@ -3,7 +3,7 @@
 						<div class="col-md-6">
 							<div class="header-search">
 								<form action="search.jsp" method="POST">
-									<select class="input-select">
+									<select class="input-select" name="sfilter">
 										<option value="0">Filter</option>
 										 <optgroup label="By Genre"">
             <% 
@@ -24,7 +24,8 @@
 										</optgroup>
 									</select>
 									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+								
+									<input type="submit" value="Search" name="submit" class="search-btn">
 								</form>
 								<div style="display: table; width: 100%;">
 								<a href="search.jsp" style="color: white; margin:auto; display: table-cell; text-align: center;">Advanced Search</a>

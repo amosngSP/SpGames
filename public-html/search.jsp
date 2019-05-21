@@ -155,11 +155,25 @@
 <% if(request.getParameter("submit")!=null){ %>
 		<div class="section">
 		<div class="container">
-			<%
-				String gameTitle = request.getParameter("game-title");
+			<%String preowned=null,gameTitle=null;
+				String[]genres=null;
+				if(request.getParameter("sfilter")!=null){
+					String sfilter = request.getParameter("sfilter");
+					if (sfilter.equals("p1")){
+						preowned = "1";
+					} else if(sfilter.equals("p2")){
+						preowned ="2";
+					} else {
+						genres = request.getParameterValues("sfilter");
+					}
+				}
+				else{
+				gameTitle = request.getParameter("game-title");
+				
+				genres = request.getParameterValues("genres");
+				preowned = request.getParameter("pre-owned");
+				}
 				if(gameTitle == null){gameTitle = "";}
-				String[] genres = request.getParameterValues("genres");
-				String preowned = request.getParameter("pre-owned");
 				if(preowned == null){preowned = "";}
 				Connection conn;
 				Spgames tempcon = new Spgames();
