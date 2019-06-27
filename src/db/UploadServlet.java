@@ -19,7 +19,6 @@ import javax.servlet.http.Part;
 
 public class UploadServlet extends HttpServlet {
 	Spgames dbcon = new Spgames();
-	boolean dummy = dbcon.setValues();
 	Connection conn = dbcon.connection();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

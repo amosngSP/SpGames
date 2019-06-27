@@ -8,7 +8,6 @@
 										 <optgroup label="By Genre"">
             <% 
             Spgames dbcon = new Spgames();
-            dbcon.setValues();
             ArrayList<genres> genre_list = new ArrayList<genres>();
             genre_list = dbcon.get_genres();
             		for (genres g: genre_list){

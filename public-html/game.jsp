@@ -11,7 +11,6 @@
     	throw new javax.servlet.jsp.SkipPageException();
     }
     Spgames con = new Spgames();
-    con.setValues();
     game_entry game = con.get_game_info(gameid);
     ArrayList<comment> comment_list = con.get_comments(gameid);
     if (game == null){response.sendRedirect("index.jsp"); throw new javax.servlet.jsp.SkipPageException();}
@@ -57,7 +56,7 @@
 
 						<!-- SEARCH BAR -->
 						<%@ include file="/etc/searchbar-import.jsp" %>
-						<!-- /SEARCH BAR -->
+						<!-- /SEARCH BAR --> 
 
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">

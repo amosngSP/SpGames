@@ -67,7 +67,6 @@ public class UpdateServlet extends HttpServlet {
 			temp.set_preowned(preowned);
 			temp.set_description(description);
 			Spgames dbcon = new Spgames();
-			dbcon.setValues();
 			if (inputStream == null) {
 				dbcon.updateGame(temp);
 			} else {

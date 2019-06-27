@@ -12,7 +12,6 @@ if(request.getParameter("submit") != null){
 	cmt.set_review(review);
 	cmt.set_username(username);
 	Spgames con = new Spgames();
-	con.setValues();
 	if(con.add_comment(cmt)){
 		response.sendRedirect("game.jsp?game_id="+game_id+"&success=1");
 	} else{

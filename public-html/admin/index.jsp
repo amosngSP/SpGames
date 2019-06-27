@@ -5,7 +5,6 @@
          <% 
      if(request.getParameter("btnSubmit") != null){
     	Spgames dbcon = new Spgames();
-    	 dbcon.setValues();
     	 String name = request.getParameter("loginid");
     	 String password = request.getParameter("password");
     	 boolean check = dbcon.login(name, password);

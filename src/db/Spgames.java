@@ -26,17 +26,14 @@ public class Spgames {
 		return con;
 	}
 
-	public boolean setValues() {
+	public Spgames() {
 		// To return true if connection is valid, else to return false.
 		try {
 			url = "jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbdatabase;
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, dbuser, dbpassword);
-			return true;
 		} catch (Exception e) {
-
 			e.printStackTrace();
-			return false;
 		}
 	}
 
@@ -123,6 +120,7 @@ public class Spgames {
 		}
 	}
 
+	// not in use
 	public String passwordhash(String password, String salt) {
 		String passwordsalt = password + salt;
 		try {

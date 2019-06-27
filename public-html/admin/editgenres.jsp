@@ -75,7 +75,6 @@
         </tr>
         <% ArrayList<genres> genre_list = new ArrayList<genres>();
         Spgames dbcon = new Spgames();
-        dbcon.setValues();
         if(request.getParameter("del")== null){
         	genre_list = dbcon.get_genres();
         } else if(request.getParameter("del").equals("1")){

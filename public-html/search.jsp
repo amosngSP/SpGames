@@ -38,7 +38,7 @@
 						<!-- /LOGO -->
 
 						<!-- SEARCH BAR -->
-						<%@ include file="/etc/searchbar-import.jsp" %>
+						<%@ include file="/etc/searchbar-import.jsp" %> 
 						<!-- /SEARCH BAR -->
 
 						<!-- ACCOUNT -->
@@ -124,7 +124,6 @@
 		<select name="genres"  multiple="multiple" class="form-control selectpicker">
             <% 
             Spgames tempdb = new Spgames();  
-    		tempdb.setValues();
     		ArrayList<genres> genrelist = new ArrayList<genres>();
             genrelist = tempdb.get_genres();
             		for (genres g: genrelist){
@@ -177,7 +176,6 @@
 				if(preowned == null){preowned = "";}
 				Connection conn;
 				Spgames tempcon = new Spgames();
-				tempcon.setValues();
 				conn = tempcon.connection(); 
 				if(genres != null){
 					//Filter by genre first...

@@ -3,7 +3,6 @@
 try{
 	if(session.getAttribute("name")!=null&&request.getParameter("submit")!=null){
 		Spgames dbcon = new Spgames();
-		dbcon.setValues();
 		int genre_id = Integer.parseInt(request.getParameter("genre_id"));
 		int del_genre = dbcon.delete_genre(genre_id);
 		if(del_genre == 1){

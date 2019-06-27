@@ -4,7 +4,6 @@
 
         <%
         Spgames con = new Spgames();
-        con.setValues();
         ArrayList<game_entry> games = con.gamesList();
         ArrayList<game_entry> preownedgames = con.preownedGamesList();
         ArrayList<game_entry> newgames = con.newGamesList();
@@ -24,7 +23,7 @@
 		max-width:260px;
 		}
 		</style>
-    </head>
+    </head> 
 	<body>
 
 					<!-- HEADER -->

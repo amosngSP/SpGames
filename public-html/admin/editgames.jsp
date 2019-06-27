@@ -70,7 +70,6 @@
 <tbody>
 <%
 Spgames dbcon = new Spgames();
-dbcon.setValues();
 int del = 0;
 //ArrayList<game_entry> game_list = dbcon.return_all_gamesList();
 if(request.getParameter("del") != null){

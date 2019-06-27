@@ -5,7 +5,6 @@
 <%
 	if(request.getParameter("game_id") != null){
 		Spgames dbcon = new Spgames();
-		dbcon.setValues();
 		if(dbcon.delete_game(Integer.parseInt(request.getParameter("game_id")))){
 			 response.sendRedirect("editgames.jsp?success=2");
 		} else {

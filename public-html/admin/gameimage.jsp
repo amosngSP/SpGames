@@ -14,7 +14,6 @@ if (request.getParameter("game_id") != null){
 	byte imagebytes[];
 	
 		Spgames dbcon = new Spgames();
-		dbcon.setValues();
 		imageblob = dbcon.get_image(Integer.parseInt(request.getParameter("game_id")));
 		if(imageblob==null||imageblob.length()==0){
 			throw new IndexOutOfBoundsException("No image");
