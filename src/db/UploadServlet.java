@@ -2,7 +2,6 @@ package db;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -18,8 +17,7 @@ import javax.servlet.http.Part;
 @MultipartConfig(maxFileSize = 16177215) // upload file's size up to 16MB
 
 public class UploadServlet extends HttpServlet {
-	Spgames dbcon = new Spgames();
-	Connection conn = dbcon.connection();
+	GameDAO GameDAOinit = new GameDAO();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,26 +42,26 @@ public class UploadServlet extends HttpServlet {
 			} else {
 				inputStream = filePart.getInputStream();
 
-				game_entry game = new game_entry();
-				game.game_title = game_title;
-				game.company = company;
-				game.release_date = release;
-				game.price = price;
-				game.description = description;
-				game.preowned = Integer.parseInt(preowned);
-				game.genres = new ArrayList<genres>();
+				GameEntryObj game = new GameEntryObj();
+				game.SetGameTitle(game_title);
+				game.SetCompany(company);
+				game.SetReleaseDate(release);
+				game.SetPrice(price);
+				game.SetDescription(description);
+				game.SetPreOwned(Integer.parseInt(preowned));
+				ArrayList<GenresObj> TempArrayList = new ArrayList<GenresObj>();
 				for (String s : genres) {
-					genres temp = new genres();
-					temp.genre_id = Integer.parseInt(s);
-					game.genres.add(temp);
+					GenresObj temp = new GenresObj();
+					temp.SetGenreID(Integer.parseInt(s));
+					TempArrayList.add(temp);
 				}
-
+				game.SetGenresList(TempArrayList);
 				if (inputStream != null) {
-					dbcon.create_game(game, inputStream);
-					dbcon.closeConnection();
+					GameDAOinit.CreateGame(game, inputStream);
+					GameDAOinit.CloseConnection();
 				} else {
-					dbcon.create_game(game, null);
-					dbcon.closeConnection();
+					GameDAOinit.CreateGame(game, null);
+					GameDAOinit.CloseConnection();
 				}
 
 				// closes the database connection

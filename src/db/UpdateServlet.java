@@ -21,6 +21,7 @@ public class UpdateServlet extends HttpServlet {
 	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		GameDAO GameDAOinit = new GameDAO();
 		Map<String, String[]> parameters = request.getParameterMap();
 		for (String parameter : parameters.keySet()) {
 			System.out.print(parameter);
@@ -51,29 +52,28 @@ public class UpdateServlet extends HttpServlet {
 			} else {
 				System.out.println("File is null!");
 			}
-			game_entry temp = new game_entry();
-			temp.set_game_id(game_id);
-			temp.set_game_title(game_title);
-			temp.set_company(company);
-			temp.set_release_date(release_date);
-			ArrayList<genres> temp2 = new ArrayList<genres>();
+			GameEntryObj temp = new GameEntryObj();
+			temp.SetGameID(game_id);
+			temp.SetGameTitle(game_title);
+			temp.SetCompany(company);
+			temp.SetReleaseDate(release_date);
+			ArrayList<GenresObj> temp2 = new ArrayList<GenresObj>();
 			for (String s : genres_form) {
-				genres temp3 = new genres();
-				temp3.set_genre_id(Integer.parseInt(s));
+				GenresObj temp3 = new GenresObj();
+				temp3.SetGenreID(Integer.parseInt(s));
 				temp2.add(temp3);
 			}
-			temp.set_genres_list(temp2);
-			temp.set_price(price);
-			temp.set_preowned(preowned);
-			temp.set_description(description);
-			Spgames dbcon = new Spgames();
+			temp.SetGenresList(temp2);
+			temp.SetPrice(price);
+			temp.SetPreOwned(preowned);
+			temp.SetDescription(description);
 			if (inputStream == null) {
-				dbcon.updateGame(temp);
+				GameDAOinit.UpdateGame(temp, null);
 			} else {
-				dbcon.updateGame(temp, inputStream);
+				GameDAOinit.UpdateGame(temp, inputStream);
 			}
 			System.out.println("Success");
-			dbcon.closeConnection();
+			GameDAOinit.CloseConnection();
 			response.sendRedirect("editgames.jsp?success=1");
 
 		} else {
