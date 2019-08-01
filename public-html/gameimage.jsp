@@ -13,8 +13,8 @@ if (request.getParameter("game_id") != null){
 	java.sql.Blob imageblob;
 	byte imagebytes[];
 	
-		Spgames dbcon = new Spgames();
-		imageblob = dbcon.get_image(Integer.parseInt(request.getParameter("game_id")));
+		GameImageDAO GameImage_DAO = new GameImageDAOImpl();
+		imageblob = GameImage_DAO.GetGameImage(Integer.parseInt(request.getParameter("game_id")));
 		if(imageblob==null||imageblob.length()==0){
 			throw new IndexOutOfBoundsException("No image");
 

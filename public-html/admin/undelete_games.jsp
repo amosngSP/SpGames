@@ -4,8 +4,8 @@
 <%@ page import="java.util.*" %>
 <%
 	if(request.getParameter("game_id") != null){
-		Spgames dbcon = new Spgames();
-		if(dbcon.undelete_game(Integer.parseInt(request.getParameter("game_id")))){
+		GameDAO Game_DAO = new GameDAOImpl();
+		if(Game_DAO.UndoDeleteGame(Integer.parseInt(request.getParameter("game_id")))){
 			 response.sendRedirect("editgames.jsp?del=1&success=4");
 		} else {
 			response.sendRedirect("editgames.jsp?del=1&fail=4");

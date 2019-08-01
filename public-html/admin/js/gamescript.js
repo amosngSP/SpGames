@@ -7,6 +7,7 @@ $('#editModal').on('show.bs.modal', function (event) {
   var description = button.data('description');
   var price = button.data('price');
   var preowned = button.data('preowned');
+  var quantity = button.data('qty');
   try {
   var genres = button.data('genres').split(" ");
   } catch (err){
@@ -22,12 +23,24 @@ $('#editModal').on('show.bs.modal', function (event) {
   modal.find('.modal-body input#release_date').val(release_date);
   modal.find('.modal-body input#price').val(price);
   modal.find('.modal-body select#preowned').val(preowned);
+  modal.find('.modal-body input#qty').val(quantity);
   modal.find('.modal-body textarea#description').html(description);
 
 	  modal.find('.modal-body select#genres').val(genres);
 	  $('select#genres').selectpicker('refresh');
 
 })
+$('#deleteImageModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var game_id = button.data('gameid'); // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this);
+  modal.find('.modal-body input#game-id').val(game_id);
+
+})
+
+
 $('#deleteModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
   var game_id = button.data('gameid'); // Extract info from data-* attributes

@@ -68,30 +68,31 @@
         <table id="data_table" class="table table-striped" style="width: 100%; margin:auto;">
         <thead>
         <tr>
-        <td>Genre ID</td>
-        <td>Genre Name</td>
-        <td>Deleted</td>
-        <td>Actions</td>
+        <th>Genre ID</th>
+        <th>Genre Name</th>
+        <th>Deleted</th> 
+        <th>Actions</th>
         </tr>
-        <% ArrayList<genres> genre_list = new ArrayList<genres>();
-        Spgames dbcon = new Spgames();
+        <% ArrayList<Genres> genre_list = new ArrayList<Genres>();
+        SqlDAO DBSQL = new SqlDAOImpl();
+        GenresDAO Genres_DAO = new GenresDAOImpl(DBSQL);
         if(request.getParameter("del")== null){
-        	genre_list = dbcon.get_genres();
+        	genre_list = Genres_DAO.GetGenresList(0);
         } else if(request.getParameter("del").equals("1")){
-        	genre_list = dbcon.get_all_genres();
+        	genre_list = Genres_DAO.GetGenresList(-1);
         }
-			for(genres s: genre_list){        
+			for(Genres s: genre_list){        
         %>
-        <tr><td><%= s.get_genre_id() %></td><td><%= s.get_genre_name() %></td><td><%= s.get_deleted() %></td><td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-genreid="<%= s.get_genre_id() %>" data-genrename="<%= s.get_genre_name() %>">Edit</button>
+        <tr><td><%= s.GetGenreID() %></td><td><%= s.GetGenreName() %></td><td><%= s.GetDeleted() %></td><td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-genreid="<%= s.GetGenreID() %>" data-genrename="<%= s.GetGenreName() %>">Edit</button>
 
-<%if (s.get_deleted() == 0){ %>
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-genreid="<%= s.get_genre_id() %>" >Delete</button> 
+<%if (s.GetDeleted() == 0){ %>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-genreid="<%= s.GetGenreID() %>" >Delete</button> 
 <%} else { %>
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#UNdeleteModal" data-genreid="<%= s.get_genre_id() %>" >Undo Delete</button>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#UNdeleteModal" data-genreid="<%= s.GetGenreID() %>" >Undo Delete</button>
 
 <%} %></td></tr>
         <%} %> 
-        </thead>
+        </thead> 
         </table>
       </div>
       

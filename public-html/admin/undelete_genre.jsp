@@ -2,9 +2,9 @@
 <% 
 try{
 	if(session.getAttribute("name")!=null&&request.getParameter("submit")!=null){
-		Spgames dbcon = new Spgames();
+		GenresDAO Genres_DAO = new GenresDAOImpl();
 		int genre_id = Integer.parseInt(request.getParameter("genre_id"));
-		int del_genre = dbcon.undelete_genre(genre_id);
+		int del_genre = Genres_DAO.UndoDeleteGenre(genre_id);
 		if(del_genre == 1){
 			response.sendRedirect("editgenres.jsp?fail=4");
 		} else if(del_genre == 0){

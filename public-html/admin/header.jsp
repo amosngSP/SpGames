@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
         <%@ page import ="db.*" %>
         <%@ page import ="java.util.ArrayList" %>
-         <% if(session.getAttribute("name")== null){response.sendRedirect("index.jsp");} %>
+         <% if(session.getAttribute("name")== null){response.sendRedirect("../index.jsp");} %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +30,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
 <style>
+
 body{
 width: 100%;
 margin:auto;
@@ -54,9 +55,9 @@ margin:auto;
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading" style="background-color:black;">  <img src="img/logo.png" width="200px"></div>
+     <div class="sidebar-heading" style="background-color:black;"> <a href="../index.jsp">  <img src="img/logo.png" width="200px"></a></div>
       <div class="list-group list-group-flush">
-        <a href="admin.jsp" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="index.jsp" class="list-group-item list-group-item-action bg-light">Dashboard</a>
         <a href="editgames.jsp" class="list-group-item list-group-item-action bg-light">Edit Games</a>
         <a href="editgenres.jsp" class="list-group-item list-group-item-action bg-light">Edit Genres</a>
       </div>
@@ -76,6 +77,7 @@ margin:auto;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
+             
               <a class="nav-link" href="logout.jsp">Logout</a>
             </li>
           </ul>

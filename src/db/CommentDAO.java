@@ -1,42 +1,15 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class CommentDAO {
-	SqlDAO DBSQL = new SqlDAO();
-	Connection con = DBSQL.GetConnectionObj();
+public interface CommentDAO {
+	public ArrayList<Comment> GetComments(int GameID);
 
-	public ArrayList<CommentObj> get_comments(int gameid) {
-		try {
-			ResultSet comments = DBSQL.SelectSQL("SELECT * from game_comments WHERE game_id = ?", gameid);
-			ArrayList<CommentObj> comments_list = new ArrayList<CommentObj>();
+	public boolean AddComment(Comment Comment);
 
-			while (comments.next()) {
-				CommentObj row = new CommentObj(Integer.parseInt(comments.getString("comment_id")),
-						Integer.parseInt(comments.getString("game_id")), comments.getString("username"),
-						Integer.parseInt(comments.getString("rating")), comments.getString("review"),
-						comments.getTimestamp("Date"));
-				comments_list.add(row);
-			}
-			return comments_list;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+	public boolean DeleteComment(int CommentID);
 
-	public boolean add_comment(CommentObj comment) {
-		try {
-			Object[] comm = { comment.GetGameID(), comment.GetUsername(), comment.GetRating(), comment.GetReview() };
-			return DBSQL.InsertSQL(
-					"INSERT INTO `game_comments` (`comment_id`, `game_id`, `username`, `rating`, `review`) VALUES (NULL, ?, ?, ?, ?)",
-					comm);
+	public boolean UndoDeleteComment(int CommentID);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+	public boolean EditComment(Comment Comment);
 }
