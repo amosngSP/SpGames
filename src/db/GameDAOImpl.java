@@ -231,23 +231,27 @@ public class GameDAOImpl implements GameDAO {
 				rs = DBSQL.SelectSQL("SELECT * from game");
 			}
 			ArrayList<Game> results = new ArrayList<Game>();
-			while (rs.next()) {
-				Game row = new Game(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("preowned")),
-						rs.getString("gametitle"), rs.getString("company"), rs.getString("releasedate"),
-						rs.getString("description"), rs.getString("price"), rs.getInt("quantity"),
-						rs.getInt("deleted"));
-				ResultSet rs1 = DBSQL.SelectSQL(
-						"SELECT gg.gameid, G.id, G.name FROM gamegenre gg, genre G, genre GE WHERE gg.gameid = ? AND gg.genreid = G.id AND gg.genreid = GE.id AND GE.deleted = 0",
-						rs.getString("id"));
-				ArrayList<Genres> temp1 = new ArrayList<Genres>();
-				while (rs1.next()) {
-					Genres temp = new Genres();
-					temp.SetGenreID(Integer.parseInt(rs1.getString("id")));
-					temp.SetGenreName(rs1.getString("name"));
-					temp1.add(temp);
+			if (rs != null) {
+				while (rs.next()) {
+					Game row = new Game(Integer.parseInt(rs.getString("id")),
+							Integer.parseInt(rs.getString("preowned")), rs.getString("gametitle"),
+							rs.getString("company"), rs.getString("releasedate"), rs.getString("description"),
+							rs.getString("price"), rs.getInt("quantity"), rs.getInt("deleted"));
+					ResultSet rs1 = DBSQL.SelectSQL(
+							"SELECT gg.gameid, G.id, G.name FROM gamegenre gg, genre G, genre GE WHERE gg.gameid = ? AND gg.genreid = G.id AND gg.genreid = GE.id AND GE.deleted = 0",
+							rs.getString("id"));
+					ArrayList<Genres> temp1 = new ArrayList<Genres>();
+					while (rs1.next()) {
+						Genres temp = new Genres();
+						temp.SetGenreID(Integer.parseInt(rs1.getString("id")));
+						temp.SetGenreName(rs1.getString("name"));
+						temp1.add(temp);
+					}
+					row.SetGenresList(temp1);
+					results.add(row);
 				}
-				row.SetGenresList(temp1);
-				results.add(row);
+			} else {
+				return null;
 			}
 			return results;
 		} catch (SQLException e) {
@@ -297,22 +301,26 @@ public class GameDAOImpl implements GameDAO {
 			ResultSet rs;
 			rs = DBSQL.SelectSQL("SELECT * from game WHERE deleted = 0 AND preowned = ?", PreOwned);
 			ArrayList<Game> results = new ArrayList<Game>();
-			while (rs.next()) {
-				Game row = new Game(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("preowned")),
-						rs.getString("gametitle"), rs.getString("company"), rs.getString("releasedate"),
-						rs.getString("description"), rs.getString("price"), rs.getInt("quantity"),
-						rs.getInt("deleted"));
-				ResultSet rs1 = DBSQL.SelectSQL(
-						"SELECT gg.gameid, G.name FROM gamegenre gg, genre G WHERE gg.gameid = ? AND gg.genreid = G.id AND G.deleted = 0 ",
-						rs.getString("id"));
-				ArrayList<Genres> temp1 = new ArrayList<Genres>();
-				while (rs1.next()) {
-					Genres temp = new Genres();
-					temp.SetGenreName(rs1.getString("name"));
-					temp1.add(temp);
+			if (rs != null) {
+				while (rs.next()) {
+					Game row = new Game(Integer.parseInt(rs.getString("id")),
+							Integer.parseInt(rs.getString("preowned")), rs.getString("gametitle"),
+							rs.getString("company"), rs.getString("releasedate"), rs.getString("description"),
+							rs.getString("price"), rs.getInt("quantity"), rs.getInt("deleted"));
+					ResultSet rs1 = DBSQL.SelectSQL(
+							"SELECT gg.gameid, G.name FROM gamegenre gg, genre G WHERE gg.gameid = ? AND gg.genreid = G.id AND G.deleted = 0 ",
+							rs.getString("id"));
+					ArrayList<Genres> temp1 = new ArrayList<Genres>();
+					while (rs1.next()) {
+						Genres temp = new Genres();
+						temp.SetGenreName(rs1.getString("name"));
+						temp1.add(temp);
+					}
+					row.SetGenresList(temp1);
+					results.add(row);
 				}
-				row.SetGenresList(temp1);
-				results.add(row);
+			} else {
+				return null;
 			}
 			return results;
 		} catch (SQLException e) {

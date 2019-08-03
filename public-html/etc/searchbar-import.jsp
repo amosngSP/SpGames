@@ -10,11 +10,12 @@
 						GenresDAO GD = new GenresDAOImpl();
 						ArrayList<Genres> genre_list = new ArrayList<Genres>();
 						genre_list = GD.GetGenresList(0);
+						if(genre_list != null){
 						for (Genres g : genre_list) {
 					%>
 					<option value="<%=g.GetGenreID()%>"><%=g.GetGenreName()%></option>
 					<%
-						}
+						}}
 					%>
 				</optgroup>
 				<optgroup label="Pre-Owned">

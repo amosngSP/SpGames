@@ -42,7 +42,7 @@ public class ServletRegister extends HttpServlet {
 		String displayname = request.getParameter("displayname").trim();
 		String address = request.getParameter("address").trim();
 
-		String emailregex = "/^\\w+@\\w+\\.\\w+$/";
+		String emailregex = "^[\\w\\.]+@\\w+\\.[\\w\\.]+$";
 		UserLoginDAO UserLogin_DAO = new UserLoginDAOImpl();
 		ValidationUtils Check = new ValidationUtils();
 		// Check if any data sent is null

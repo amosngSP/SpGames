@@ -122,11 +122,12 @@ td {
 									GenresDAO Genres_DAO = new GenresDAOImpl(DBSQL);
 									ArrayList<Genres> genrelist = new ArrayList<Genres>();
 									genrelist = Genres_DAO.GetGenresList(0);
+									if(genrelist!=null){
 									for (Genres g : genrelist) {
 								%>
 								<option value=" <%=g.GetGenreID() %> "><%=g.GetGenreName()%></option>
 								<%
-									}
+									}}
 								%>
 							</select>
 						</div>

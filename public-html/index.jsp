@@ -7,8 +7,17 @@
 	SqlDAO DBSQL = new SqlDAOImpl();
 	GameDAO Games_DAO = new GameDAOImpl(DBSQL);
 	ArrayList<Game> games = Games_DAO.GetGamesList(0);
+	if (games == null){
+		games = new ArrayList<Game>();
+	}
 	ArrayList<Game> preownedgames = Games_DAO.GetPreownedGamesList(1);
+	if (preownedgames == null){
+		preownedgames = new ArrayList<Game>();
+	}
 	ArrayList<Game> newgames = Games_DAO.GetPreownedGamesList(0);
+	if (newgames == null){
+		newgames = new ArrayList<Game>();
+	}
 %>
 <!DOCTYPE html>
 <html lang="en">
