@@ -1,21 +1,20 @@
 package db;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class GenresDAOImpl implements GenresDAO {
-	SqlDAO DBSQL;
-	Connection con;
+	private SqlDAO DBSQL;
+	// private Connection con;
 
 	public GenresDAOImpl(SqlDAO DB) {
 		DBSQL = DB;
-		con = DBSQL.GetConnectionObj();
+		// con = DBSQL.GetConnectionObj();
 	}
 
 	public GenresDAOImpl() {
 		DBSQL = new SqlDAOImpl();
-		con = DBSQL.GetConnectionObj();
+		// con = DBSQL.GetConnectionObj();
 	}
 
 	public ArrayList<Genres> GetGenresList(int Del) {
@@ -74,7 +73,7 @@ public class GenresDAOImpl implements GenresDAO {
 
 	public int DeleteGenre(int GenreID) {
 		try {
-			ResultSet rs = DBSQL.SelectSQL("SELECT * FROM game_genre WHERE id = ?", GenreID);
+			ResultSet rs = DBSQL.SelectSQL("SELECT * FROM gamegenre WHERE genreid = ?", GenreID);
 			if (rs.next()) {
 				return 1;
 			} else {

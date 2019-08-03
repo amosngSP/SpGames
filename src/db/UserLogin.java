@@ -7,16 +7,16 @@ public class UserLogin implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1460336266503793878L;
-	int id;
-	String username;
-	String shadow;
-	String password;
-	int admin;
-	int status;
-	String displayname;
-	String address;
-	String email;
-	String contactnumber;
+	private int id;
+	private String username;
+	private String shadow;
+	private String password;
+	private int admin;
+	private int status;
+	private String displayname;
+	private String address;
+	private String email;
+	private String contactnumber;
 
 	public UserLogin() {
 

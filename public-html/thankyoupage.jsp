@@ -89,7 +89,7 @@
 			<!-- row -->
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="breadcrumb-header">Registration</h3>
+					<h3 class="breadcrumb-header">Thank you for your purchase.</h3>
 					<ul class="breadcrumb-tree">
 						<li><a href="index.jsp">Home</a></li>
 					</ul>
@@ -108,46 +108,8 @@
 			<!-- row -->
 			<div class="row">
 				<div style="width: 80%; margin: auto; max-width: 500px;">
-					<form action="ServletRegister" method="POST" id="register_form">
-						<div id="warning"></div>
-						<div class="form-group">
-							<label for="Username">Username</label> <input type="text"
-								class="form-control" name="username" aria-describedby="Username"
-								placeholder="Enter Username" id="username"required>
-						</div>
-						<div class="form-group">
-							<label for="Password">Password</label> <input type="password"
-								class="form-control" name="password" aria-describedby="Password"
-								placeholder="Password" id="password" pattern="^(?=.*\d)(?=.*[a-zA-Z]).{8,16}$" title="Password with at least a letter, number, and length to be between 8 and 16." required>
-						</div>
-						<div class="form-group">
-							<label for="Email">Email address</label> <input type="email"
-								class="form-control" name="email" aria-describedby="Email"
-								placeholder="Enter email" id="email" required> <small
-								class="form-text text-muted">We'll never share your
-								email with anyone else.</small>
-						</div>
-						<div class="form-group">
-							<label for="Password">Contact Number</label> <input type="text"
-								class="form-control" name="contact" aria-describedby="Contact Number"
-								placeholder="Password" id="contact" pattern="^\d{8,8}$" title="8-digit contact number"  required>
-						</div>
-						<div class="form-group">
-							<label for="Username">Full Name</label> <input type="text"
-								class="form-control" name="displayname"
-								aria-describedby="Full Name" id="displayname" placeholder="Enter Full Name" required>
-							<small class="form-text text-muted">We will use this name
-								to address you.</small>
-						</div>
-
-						<div class="form-group">
-							<label for="Username">Shipping Address</label>
-							<textarea class="form-control" id="address" name="address" required>
-							</textarea>
-						</div>
-
-						<input type="submit" class="form-control" value="Submit">
-					</form>
+				<h3>Thank you for your purchase.</h3>
+				<p>Your items will be shipped out within 10 working days.</p>
 				</div>
 			</div>
 			<!-- /row -->

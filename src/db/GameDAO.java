@@ -20,6 +20,10 @@ public interface GameDAO {
 
 	public ArrayList<Game> GetGamesList(int Del);
 
+	public ArrayList<Game> GetGamesReport(int qty);
+
+	public boolean DeductQty(int gameid, int qtytodeduct);
+
 	public ArrayList<Game> GetPreownedGamesList(int PreOwned);
 
 }

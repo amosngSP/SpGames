@@ -8,8 +8,8 @@ public class GameImage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4743223256407176707L;
-	int GameID;
-	InputStream ImageBlob;
+	private int GameID;
+	private InputStream ImageBlob;
 
 	public GameImage() {
 

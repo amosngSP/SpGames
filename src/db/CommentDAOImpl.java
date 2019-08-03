@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class CommentDAOImpl implements CommentDAO {
-	SqlDAO DBSQL;
-	Connection con;
+	private SqlDAO DBSQL;
+	private Connection con;
 
 	public CommentDAOImpl(SqlDAO DB) {
 		DBSQL = DB;

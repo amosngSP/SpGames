@@ -68,7 +68,7 @@
         <table id="data_table" class="table table-striped" style="width: 100%; margin:auto;">
         <thead>
         <tr>
-        <th>Genre ID</th>
+        <th scope="row">Genre ID</th>
         <th>Genre Name</th>
         <th>Deleted</th> 
         <th>Actions</th>

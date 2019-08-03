@@ -45,7 +45,7 @@
 		style="width: 100%; margin: auto;">
 		<thead>
 			<tr>
-				<th>Game ID</th>
+				<th scope="row">Game ID</th>
 				<th>Pre Owned</th>
 				<th>Game Image</th>
 				<th>Game Title</th>

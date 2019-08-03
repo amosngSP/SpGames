@@ -52,7 +52,8 @@
 					<!-- ACCOUNT -->
 					<div class="col-md-3 clearfix">
 						<div class="header-ctn">
-							<!-- Wishlist -->
+							<!-- Cart -->
+							<%@ include file="/etc/minicart.jsp" %>
 							<!-- /Cart -->
 
 							<!-- Menu Toogle -->

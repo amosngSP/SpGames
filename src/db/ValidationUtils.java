@@ -36,7 +36,7 @@ public class ValidationUtils {
 		// Return 1 ->Password too short
 		// Return 2 ->Password too long
 		// Return 3 ->Password does not meet regex
-		String passwordregex = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
+		String passwordregex = "^(?=.*\\d)(?=.*[a-zA-Z]).{8,16}$";
 
 		if (password.length() < 8) {
 			return 1;

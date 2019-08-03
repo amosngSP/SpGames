@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GameDAOImpl implements GameDAO {
-	SqlDAO DBSQL;
-	Connection con;
+	private SqlDAO DBSQL;
+	private Connection con;
 
 	public GameDAOImpl(SqlDAO DB) {
 		DBSQL = DB;
@@ -29,6 +29,7 @@ public class GameDAOImpl implements GameDAO {
 		try {
 			System.out.println("create_game");
 			Game.SetGameID(DBSQL.GetA_INumber("game"));
+			System.out.println("Game ID Generated:" + Game.GetGameID());
 			PreparedStatement ps = con.prepareStatement(
 					"INSERT INTO `game` (`id`, `preowned`,`gametitle`, `company`, `releasedate`, `description`, `price`, `quantity`, `deleted`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, '0')");
 			ps.setObject(1, Game.GetPreOwned());
@@ -82,8 +83,12 @@ public class GameDAOImpl implements GameDAO {
 			GameData.SetGameID(GameRow.GetGameID());
 			GameData.SetImage(Image);
 			GameImageDAO GameImage_DAO = new GameImageDAOImpl();
-			GameImage_DAO.UpdateGameImage(GameData);
-
+			boolean UpdatedGame = GameImage_DAO.UpdateGameImage(GameData);
+			if (UpdatedGame) {
+				System.out.println("True, Image was updated.");
+			} else {
+				System.out.println("Well, something went wrong.");
+			}
 			DBSQL.InsertSQL("DELETE FROM `gamegenre` WHERE `gameid` = ?", GameRow.GetGameID());
 
 			for (Genres s : GameRow.GetGenres()) {
@@ -190,6 +195,29 @@ public class GameDAOImpl implements GameDAO {
 		}
 	}
 
+	public boolean DeductQty(int gameid, int qtytodeduct) {
+		try {
+			String SQL_1 = "SELECT quantity FROM game WHERE id = ?";
+			ResultSet rs = DBSQL.SelectSQL(SQL_1, gameid);
+			if (rs.next()) {
+				int qty = rs.getInt("quantity");
+				int updatedqty = qty - qtytodeduct;
+				String SQL_Update = "UPDATE `game` SET `quantity` = ? WHERE `game`.`id` = ?";
+				Object[] tempobj = { updatedqty, gameid };
+				if (DBSQL.InsertSQL(SQL_Update, tempobj)) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public ArrayList<Game> GetGamesList(int Del) {
 		try {
 			// 0 -> not deleted games 1 -> deleted games -1 or any other integer -> all
@@ -202,6 +230,40 @@ public class GameDAOImpl implements GameDAO {
 			} else {
 				rs = DBSQL.SelectSQL("SELECT * from game");
 			}
+			ArrayList<Game> results = new ArrayList<Game>();
+			while (rs.next()) {
+				Game row = new Game(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("preowned")),
+						rs.getString("gametitle"), rs.getString("company"), rs.getString("releasedate"),
+						rs.getString("description"), rs.getString("price"), rs.getInt("quantity"),
+						rs.getInt("deleted"));
+				ResultSet rs1 = DBSQL.SelectSQL(
+						"SELECT gg.gameid, G.id, G.name FROM gamegenre gg, genre G, genre GE WHERE gg.gameid = ? AND gg.genreid = G.id AND gg.genreid = GE.id AND GE.deleted = 0",
+						rs.getString("id"));
+				ArrayList<Genres> temp1 = new ArrayList<Genres>();
+				while (rs1.next()) {
+					Genres temp = new Genres();
+					temp.SetGenreID(Integer.parseInt(rs1.getString("id")));
+					temp.SetGenreName(rs1.getString("name"));
+					temp1.add(temp);
+				}
+				row.SetGenresList(temp1);
+				results.add(row);
+			}
+			return results;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
+	public ArrayList<Game> GetGamesReport(int qty) {
+		try {
+			// 0 -> not deleted games 1 -> deleted games -1 or any other integer -> all
+			// whether deleted or not
+			ResultSet rs = DBSQL.SelectSQL("SELECT * from game WHERE quantity < ?", qty);
+
 			ArrayList<Game> results = new ArrayList<Game>();
 			while (rs.next()) {
 				Game row = new Game(Integer.parseInt(rs.getString("id")), Integer.parseInt(rs.getString("preowned")),

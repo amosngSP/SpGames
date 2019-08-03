@@ -11,15 +11,15 @@ public class Comment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4020616153101942722L;
-	int CommentID;
+	private int CommentID;
 
-	int GameID;
-	int UserID;
-	String Username;
-	String Comment;
-	int Rating;
-	Timestamp Datetime;
-	int Deleted;
+	private int GameID;
+	private int UserID;
+	private String Username;
+	private String Comment;
+	private int Rating;
+	private Timestamp Datetime;
+	private int Deleted;
 
 	public Comment() {
 

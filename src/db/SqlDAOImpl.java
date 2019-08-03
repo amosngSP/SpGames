@@ -6,14 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class SqlDAOImpl implements SqlDAO {
-	Sql DBInfo = new Sql();
-	String dbuser = DBInfo.GetDBUsername();
-	String dbpassword = DBInfo.GetPassword();
-	String dbdatabase = DBInfo.GetMainDatabase();
-	String dbhost = DBInfo.GetHost();
-	String dbport = DBInfo.GetPort();
-	String url;
-	Connection con;
+	private Sql DBInfo = new Sql();
+	private String dbuser = DBInfo.GetDBUsername();
+	private String dbpassword = DBInfo.GetPassword();
+	private String dbdatabase = DBInfo.GetMainDatabase();
+	private String dbhost = DBInfo.GetHost();
+	private String dbport = DBInfo.GetPort();
+	private String url;
+	private Connection con;
 
 	public SqlDAOImpl() {
 		// Establish Database Connection
@@ -23,6 +23,7 @@ public class SqlDAOImpl implements SqlDAO {
 			con = DriverManager.getConnection(url, dbuser, dbpassword);
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
 	}
 
@@ -104,16 +105,17 @@ public class SqlDAOImpl implements SqlDAO {
 	public int GetA_INumber(String table) {
 		try {
 			// Information Schema
-			String sqlID = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = 'hexgear_store_db' AND `TABLE_NAME` = ?";
-			ResultSet rs = SelectSQL(sqlID, table);
+			String sqlID = "SELECT id FROM " + table + " ORDER BY id DESC";
+			ResultSet rs = SelectSQL(sqlID);
 			if (rs.next()) {
-				return Integer.parseInt(rs.getString(1));
+				return Integer.parseInt(rs.getString(1)) + 1;
 			} else {
-				return 0;
+				return 1;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
 	}
+
 }

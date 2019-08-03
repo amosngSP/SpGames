@@ -8,16 +8,16 @@ public class Game implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5593297814992750731L;
-	int GameID;
-	int PreOwned;
-	String GameTitle;
-	String Company;
-	String ReleaseDate;
-	String Description;
-	String Price;
-	ArrayList<Genres> Genres;
-	int Quantity;
-	int Deleted;
+	private int GameID;
+	private int PreOwned;
+	private String GameTitle;
+	private String Company;
+	private String ReleaseDate;
+	private String Description;
+	private String Price;
+	private ArrayList<Genres> Genres;
+	private int Quantity;
+	private int Deleted;
 
 	public Game() {
 

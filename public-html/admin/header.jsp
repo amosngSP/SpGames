@@ -59,6 +59,7 @@ margin:auto;
       <div class="list-group list-group-flush">
         <a href="index.jsp" class="list-group-item list-group-item-action bg-light">Dashboard</a>
         <a href="editgames.jsp" class="list-group-item list-group-item-action bg-light">Edit Games</a>
+        <a href="stockreport.jsp" class="list-group-item list-group-item-action bg-light">Games Report</a>
         <a href="editgenres.jsp" class="list-group-item list-group-item-action bg-light">Edit Genres</a>
       </div>
     </div>

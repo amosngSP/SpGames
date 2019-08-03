@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class GameImageDAOImpl implements GameImageDAO {
-	SqlDAO DBSQL;
-	Connection con;
+	private SqlDAO DBSQL;
+	private Connection con;
 
 	public GameImageDAOImpl(SqlDAO DB) {
 		DBSQL = DB;
@@ -44,7 +44,9 @@ public class GameImageDAOImpl implements GameImageDAO {
 			PreparedStatement ps = con.prepareStatement(sqlstatement);
 			ps.setBlob(1, GameImageObj.GetImage());
 			ps.setObject(2, GameImageObj.GetGameID());
-			return ps.execute();
+			boolean temp = ps.execute();
+			System.out.println("Game image update: " + temp);
+			return temp;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
