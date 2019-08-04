@@ -53,9 +53,9 @@ public class ServletAddComment extends HttpServlet {
 				}
 				CommentDAO Comment_DAO = new CommentDAOImpl();
 				if (Comment_DAO.AddComment(cmt)) {
-					response.sendRedirect("game.jsp?game_id=" + game_id + "&success=1");
+					response.sendRedirect("game.jsp?game_id=" + game_id + "&status=1");
 				} else {
-					response.sendRedirect("game.jsp?game_id=" + game_id + "&success=0");
+					response.sendRedirect("game.jsp?game_id=" + game_id + "&status=1");
 				}
 			} else {
 				response.sendRedirect("index.jsp");

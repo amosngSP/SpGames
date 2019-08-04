@@ -61,9 +61,9 @@ public class ServletCheckout extends HttpServlet {
 			}
 			if (Trans_DAO.UploadPurchase(TransData)) {
 				session.setAttribute("cart_list", null);
-				response.sendRedirect("thankyoupage.jsp?success=true");
+				response.sendRedirect("thankyoupage.jsp?status=1");
 			} else {
-				response.sendRedirect("thankyoupage.jsp?error=true");
+				response.sendRedirect("thankyoupage.jsp?status=0");
 			}
 
 		} else {

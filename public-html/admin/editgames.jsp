@@ -15,12 +15,24 @@
 				out.print(Alerts.SuccessAlert("The game entry has been added."));
 			} else if (request.getParameter("success").equals("4")) {
 				out.print(Alerts.SuccessAlert("The game entry has been brought back from the dead."));
+			} else if (request.getParameter("success").equals("5")) {
+				out.print(Alerts.SuccessAlert("The game image has been deleted."));
 			}
 		} else if (request.getParameter("fail") != null) {
-			if (request.getParameter("fail").equals("3")) {
+			if (request.getParameter("fail").equals("1")) {
+				out.print(Alerts.CritAlert("There was an error while trying to update the game."));
+			} else if (request.getParameter("fail").equals("2")) {
+				out.print(Alerts.CritAlert("There was an error while trying to delete the game."));
+			} else if (request.getParameter("fail").equals("3")) {
 				out.print(Alerts.CritAlert("File size too big! Please choose a smaller file."));
+			} else if (request.getParameter("fail").equals("3a")) {
+				out.print(Alerts.CritAlert("There was an error while trying to create the game."));
+			} else if (request.getParameter("fail").equals("3b")) {
+				out.print(Alerts.CritAlert("There was an error while trying to upload the video game url."));
 			} else if (request.getParameter("fail").equals("4")) {
 				out.print(Alerts.CritAlert("Game decided to stay dead, it thought it was playing dead."));
+			} else if (request.getParameter("fail").equals("5")) {
+				out.print(Alerts.CritAlert("There was an error while trying to delete the image."));
 			}
 		}
 	%>
@@ -49,6 +61,7 @@
 				<th>Pre Owned</th>
 				<th>Game Image</th>
 				<th>Game Title</th>
+				<th>Video URL</th>
 				<th>Company Name</th>
 				<th>Release Date</th>
 				<th style="width: 500px;">Description</th>
@@ -71,8 +84,10 @@
 					}
 				}
 				GameDAO Game_DAO = new GameDAOImpl(DBSQL);
+				GameVideoDAO GameVideo_DAO = new GameVideoDAOImpl(DBSQL);
 				ArrayList<Game> game_list = Game_DAO.GetGamesList(0);
 				for (Game game : game_list) {
+					GameVideo GameVideo_Temp = GameVideo_DAO.Get_Game_Video(game.GetGameID());
 			%>
 			<tr id="<%=game.GetGameID()%>">
 				<td><%=game.GetGameID()%></td>
@@ -88,6 +103,15 @@
 				<td><img src="gameimage.jsp?game_id=<%=game.GetGameID()%>"
 					width="100"></td>
 				<td><%=game.GetGameTitle()%></td>
+				<td>
+					<%
+						if (GameVideo_Temp.GetVideoURL() == null) {
+								out.print("No URL");
+							} else {
+								out.print(GameVideo_Temp.GetVideoURL());
+							}
+					%>
+				</td>
 				<td><%=game.GetCompany()%></td>
 				<td><%=game.GetReleaseDate()%></td>
 				<td><%=game.GetDescription()%></td>
@@ -107,16 +131,19 @@
 						data-toggle="modal" data-target="#editModal"
 						data-gameid="<%=game.GetGameID()%>"
 						data-gametitle="<%=game.GetGameTitle()%>"
+						data-videourl="<%if (GameVideo_Temp.GetVideoURL() == null) {
+				} else {
+					out.print(GameVideo_Temp.GetVideoURL());
+				}%>"
 						data-company="<%=game.GetCompany()%>"
 						data-releasedate="<%=game.GetReleaseDate()%>"
 						data-description="<%=game.GetDescription()%>"
 						data-price="<%=game.GetPrice()%>"
 						data-preowned="<%=game.GetPreOwned()%>"
-						data-genres="<%=genre_ids.trim()%>"
-						data-qty="<%=game.GetQty()%>">Edit</button>
-						<button type="button" class="btn btn-danger" data-toggle="modal"
-						data-target="#deleteImageModal" data-gameid="<%=game.GetGameID()%>">Delete Image</button>
-						 <%
+						data-genres="<%=genre_ids.trim()%>" data-qty="<%=game.GetQty()%>">Edit</button>
+					<button type="button" class="btn btn-danger" data-toggle="modal"
+						data-target="#deleteImageModal"
+						data-gameid="<%=game.GetGameID()%>">Delete Image</button> <%
  	if (game.GetDeleted() == 0) {
  %>
 					<button type="button" class="btn btn-danger" data-toggle="modal"
@@ -158,6 +185,11 @@
 								name="game_title" required>
 						</div>
 						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Video
+								URL:</label> <input type="text" class="form-control" id="video-url"
+								name="video_url" required>
+						</div>
+						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Image:</label>
 							<input type="file" class="form-control" name="image_file">
 						</div>
@@ -195,9 +227,9 @@
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Quantity:</label>
 							<input type="number" step="1" min="0" class="form-control"
-								id="qty" name="qty" required>
-								<small
-								class="form-text text-muted">Setting the Quantity to '0' will reflect it as sold out!</small>
+								id="qty" name="qty" required> <small
+								class="form-text text-muted">Setting the Quantity to '0'
+								will reflect it as sold out!</small>
 						</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Pre-Owned:</label>
@@ -247,6 +279,11 @@
 								name="game_title" required>
 						</div>
 						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">Video
+								URL:</label> <input type="text" class="form-control" id="video-url"
+								name="video_url" required>
+						</div>
+						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Image:</label>
 							<input type="file" class="form-control" name="image_file">
 						</div>
@@ -281,9 +318,9 @@
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Quantity:</label>
 							<input type="number" step="1" min="0" class="form-control"
-								id="qty" name="qty" required>
-								<small
-								class="form-text text-muted">Setting the Quantity to '0' will reflect it as sold out!</small>
+								id="qty" name="qty" required> <small
+								class="form-text text-muted">Setting the Quantity to '0'
+								will reflect it as sold out!</small>
 						</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">Pre-Owned:</label>
@@ -311,8 +348,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="deleteImageModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="deleteImageModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -323,7 +360,7 @@
 					</button>
 				</div>
 				<form id="modal-form" action="ServletDeleteImage" method="POST">
-			
+
 					<div class="modal-body">
 						<input type="hidden" name="gameid" id="game-id"> <strong>Are
 							you sure you want to remove the image for this game?</strong>
@@ -354,7 +391,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="modal-form" action="delete_games.jsp" method="POST">
+				<form id="modal-form" action="ServletGameDelete" method="POST">
 					<div class="modal-body">
 						<input type="hidden" name="game_id" id="game-id"> <strong>Are
 							you sure you want to delete this game?</strong>
@@ -386,7 +423,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="modal-form" action="undelete_games.jsp" method="POST">
+				<form id="modal-form" action="ServletGameUnDelete" method="POST">
 					<div class="modal-body">
 						<input type="hidden" name="game_id" id="game-id"> <strong>Are
 							you sure you want to bring this game back?</strong>

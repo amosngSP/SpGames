@@ -19,12 +19,14 @@ public class SqlDAOImpl implements SqlDAO {
 		// Establish Database Connection
 		try {
 			url = "jdbc:mysql://" + dbhost + ":" + dbport + "/" + dbdatabase;
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(url, dbuser, dbpassword);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
+
 	}
 
 	public Connection GetConnectionObj() {

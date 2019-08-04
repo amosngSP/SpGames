@@ -15,7 +15,12 @@ import javax.servlet.http.Part;
 import db.Game;
 import db.GameDAO;
 import db.GameDAOImpl;
+import db.GameVideo;
+import db.GameVideoDAO;
+import db.GameVideoDAOImpl;
 import db.Genres;
+import db.SqlDAO;
+import db.SqlDAOImpl;
 
 @SuppressWarnings("serial")
 @WebServlet("/admin/ServletUpload")
@@ -28,6 +33,7 @@ public class ServletGameUpload extends HttpServlet {
 			throws ServletException, IOException {
 		// gets values of text fields
 		String game_title = request.getParameter("game_title");
+		String game_video = request.getParameter("video_url");
 		String company = request.getParameter("company");
 		String release = request.getParameter("release_date");
 		String price = request.getParameter("price");
@@ -47,7 +53,8 @@ public class ServletGameUpload extends HttpServlet {
 				response.sendRedirect("editgames.jsp?fail=3");
 			} else {
 				inputStream = filePart.getInputStream();
-
+				SqlDAO Sql_DAO = new SqlDAOImpl();
+				int generated_gameid = Sql_DAO.GetA_INumber("game");
 				Game game = new Game();
 				game.SetGameTitle(game_title);
 				game.SetCompany(company);
@@ -63,19 +70,30 @@ public class ServletGameUpload extends HttpServlet {
 					TempArrayList.add(temp);
 				}
 				game.SetGenresList(TempArrayList);
+				boolean success = false;
 				if (inputStream != null) {
-					GameDAOinit.CreateGame(game, inputStream);
-					GameDAOinit.CloseConn();
+					success = GameDAOinit.CreateGame(game, inputStream);
+
 				} else {
-					GameDAOinit.CreateGame(game, null);
-					GameDAOinit.CloseConn();
+					success = GameDAOinit.CreateGame(game, null);
+
 				}
 
 				// closes the database connection
 
 				// sets the message in request scope
 				// forwards to the message page
-				response.sendRedirect("editgames.jsp?success=3");
+				if (success == true) {
+					GameVideoDAO GameVideo_DAO = new GameVideoDAOImpl();
+					GameVideo Game_Video = new GameVideo(generated_gameid, game_video);
+					if (GameVideo_DAO.Add_Game_Video(Game_Video)) {
+						response.sendRedirect("editgames.jsp?success=3");
+					} else {
+						response.sendRedirect("editgames.jsp?fail=3b");
+					}
+				} else {
+					response.sendRedirect("editgames.jsp?fail=3a");
+				}
 			}
 		}
 	}

@@ -133,14 +133,14 @@
 			<!-- row -->
 			<div class="row">
 				<%
-					if (request.getParameter("success") != null) {
-						if (request.getParameter("success").equals("1")) {
+					if (request.getParameter("status") != null) {
+						if (request.getParameter("status").equals("1")) {
 				%>
 				<div class="alert alert-success">
 					<strong>Success!</strong> Your comment has been added in.
 				</div>
 				<%
-					} else if (request.getParameter("success").equals("0")) {
+					} else if (request.getParameter("status").equals("0")) {
 				%>
 				<div class="alert alert-danger">
 					<strong>Error!</strong> An error occurred and your comment wasn't
@@ -255,7 +255,26 @@
 
 						</td>
 					</tr>
-
+					<%
+					GameVideoDAO GameVideo_DAO = new GameVideoDAOImpl();
+					GameVideo Game_Video = GameVideo_DAO.Get_Game_Video(gameid);
+					if(Game_Video.GetVideoURL() != null){
+					String regexp = "^.*((youtu.be\\/)|(v\\/)|(\\/u\\/\\w\\/)|(embed\\/)|(watch\\?))\\??v?=?([^#\\&\\?]*).";
+					String videourl = Game_Video.GetVideoURL();
+					String[] VideoURLArray = videourl.split("v=");
+					
+					%>
+					<tr>
+					<td colspan="2"><h2>Video for the Game</h2></td>
+					</tr>
+					<tr>
+					<td colspan="2">
+					<p align="center">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/<%=VideoURLArray[1] %>?autoplay=1&mute=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					</p>
+					</td>
+					</tr>
+					<%} %>
 					<tr>
 						<td colspan="2"><h2>Description</h2></td>
 					</tr>

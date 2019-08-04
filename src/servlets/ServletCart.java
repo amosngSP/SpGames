@@ -47,10 +47,7 @@ public class ServletCart extends HttpServlet {
 				}
 			} else if (action.equalsIgnoreCase("remove")) {
 				doPost_RemoveFromCart(request, response);
-			} /*
-				 * else if (action.equalsIgnoreCase("update")) { doPost_UpdateQty(request,
-				 * response); }
-				 */
+			}
 		} else {
 			response.sendRedirect("displaycart.jsp");
 		}
@@ -90,32 +87,15 @@ public class ServletCart extends HttpServlet {
 			throws ServletException, IOException {
 		String origin = request.getParameter("origin");
 		String GameID = request.getParameter("gameid");
-		if (origin != null) {
+		if (origin != null && GameID != null) {
 			if (origin.trim().equalsIgnoreCase("gamepages")) {
 				response.sendRedirect("game.jsp?game_id=" + GameID);
 			} else {
-				response.sendRedirect("displaycart.jsp?success=add");
+				response.sendRedirect("displaycart.jsp?status=1");
 			}
 		} else {
-			response.sendRedirect("displaycart.jsp?success=add");
+			response.sendRedirect("displaycart.jsp?status=1");
 		}
 	}
-	/*
-	 * protected void doPost_UpdateQty(HttpServletRequest request,
-	 * HttpServletResponse response) throws ServletException, IOException { // TODO
-	 * Auto-generated method stub HttpSession session = request.getSession(); int
-	 * GameID = Integer.parseInt(request.getParameter("gameid")); int Qty =
-	 * Integer.parseInt(request.getParameter("qty")); Item cart_item = new
-	 * Item(GameID, Qty);
-	 * 
-	 * Cart cartItemList = new Cart((Cart) session.getAttribute("cart_list"));
-	 * CartDAO Cart_DAO = new CartDAOImpl(); Cart_DAO.UpdateQty(cartItemList,
-	 * cart_item);
-	 * 
-	 * session.setAttribute("cart_list", cartItemList);
-	 * response.sendRedirect("displaycart.jsp?success=updateqty");
-	 * 
-	 * }
-	 */
 
 }

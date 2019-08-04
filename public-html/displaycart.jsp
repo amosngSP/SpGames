@@ -1,5 +1,6 @@
 
 <%@ page import="db.*"%>
+<%@ page import="htmlUtils.BootstrapAlerts" %>
 <%@ page import="java.util.*"%>
 <%
 	Cart cartItemList = new Cart((Cart) session.getAttribute("cart_list"));
@@ -110,7 +111,16 @@
 		<div class="container">
 			<!-- row -->
 			<div class="row">
-
+				<%
+				
+				String status = request.getParameter("status");
+				if (status != null){
+					BootstrapAlerts Bootstrap_Alerts = new BootstrapAlerts();
+					if (status.equalsIgnoreCase("1")){
+						out.print(Bootstrap_Alerts.SuccessAlert("The cart has been updated successfully."));
+					}
+				}
+				%>
 				<table class="table table-striped" style="width: 80%; margin: auto;">
 					<tbody>
 						<!-- First row to list out what the items mean-->

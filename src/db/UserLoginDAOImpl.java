@@ -47,12 +47,12 @@ public class UserLoginDAOImpl implements UserLoginDAO {
 				if (crypto.get().contentEquals("true")) {
 					return true;
 				} else {
-					System.out.println("not match");
-					return false;
+					throw new NullPointerException("Password not match");
+					// return false;
 				}
 			} else {
 				System.out.println("noting returned");
-				return false;
+				throw new NullPointerException("User does not exist in database");
 			}
 		} catch (Exception e) {
 			System.out.println("error");

@@ -1,10 +1,15 @@
 package db;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2567346484322353148L;
 	private int trans_id;
 	private int user_id;
 	private Timestamp datetime;

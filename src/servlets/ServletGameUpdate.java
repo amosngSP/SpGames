@@ -16,6 +16,9 @@ import javax.servlet.http.Part;
 import db.Game;
 import db.GameDAO;
 import db.GameDAOImpl;
+import db.GameVideo;
+import db.GameVideoDAO;
+import db.GameVideoDAOImpl;
 import db.Genres;
 
 @SuppressWarnings("serial")
@@ -38,6 +41,7 @@ public class ServletGameUpdate extends HttpServlet {
 		if (request.getParameter("game_id") != null) {
 			int game_id = Integer.parseInt(request.getParameter("game_id"));
 			String game_title = request.getParameter("game_title");
+			String game_video = request.getParameter("video_url");
 			String company = request.getParameter("company");
 			String release_date = request.getParameter("release_date");
 			String[] genres_form = request.getParameterValues("genres");
@@ -52,7 +56,7 @@ public class ServletGameUpdate extends HttpServlet {
 				System.out.println("File size: " + filePart.getSize());
 
 				if (filePart.getSize() > 1048576) {
-					response.sendRedirect("edit.jsp?fail=3");
+					response.sendRedirect("editgames.jsp?fail=3");
 				}
 			} else {
 				System.out.println("File is null!");
@@ -73,14 +77,25 @@ public class ServletGameUpdate extends HttpServlet {
 			temp.SetPrice(price);
 			temp.SetPreOwned(preowned);
 			temp.SetDescription(description);
+			boolean success = false;
 			if (inputStream == null) {
-				GameDAOinit.UpdateGame(temp);
+				success = GameDAOinit.UpdateGame(temp);
 			} else {
-				GameDAOinit.UpdateGame(temp, inputStream);
+				success = GameDAOinit.UpdateGame(temp, inputStream);
 			}
 			System.out.println("Success");
 			GameDAOinit.CloseConn();
-			response.sendRedirect("editgames.jsp?success=1");
+			if (success == true) {
+				GameVideoDAO GameVideo_DAO = new GameVideoDAOImpl();
+				GameVideo Game_Video = new GameVideo(game_id, game_video);
+				if (GameVideo_DAO.Update_Game_Video(Game_Video)) {
+					response.sendRedirect("editgames.jsp?success=1");
+				} else {
+					response.sendRedirect("editgames.jsp?fail=1a");
+				}
+			} else {
+				response.sendRedirect("editgames.jsp?fail=1");
+			}
 
 		} else {
 			System.out.println("Wait what");

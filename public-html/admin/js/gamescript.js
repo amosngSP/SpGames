@@ -8,6 +8,7 @@ $('#editModal').on('show.bs.modal', function (event) {
   var price = button.data('price');
   var preowned = button.data('preowned');
   var quantity = button.data('qty');
+  var video_url = button.data('videourl');
   try {
   var genres = button.data('genres').split(" ");
   } catch (err){
@@ -25,6 +26,7 @@ $('#editModal').on('show.bs.modal', function (event) {
   modal.find('.modal-body select#preowned').val(preowned);
   modal.find('.modal-body input#qty').val(quantity);
   modal.find('.modal-body textarea#description').html(description);
+  modal.find('.modal-body input#video-url').html(video_url);
 
 	  modal.find('.modal-body select#genres').val(genres);
 	  $('select#genres').selectpicker('refresh');

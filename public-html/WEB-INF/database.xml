@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<database>
-<username>root</username>
-<password></password>
-<maindatabase>hexgear_store_db</maindatabase>
-<host>localhost</host>
-<port>3306</port>
-</database>

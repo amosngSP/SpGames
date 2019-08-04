@@ -8,21 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import db.GameImage;
-import db.GameImageDAO;
-import db.GameImageDAOImpl;
+import db.GameDAO;
+import db.GameDAOImpl;
 
 /**
- * Servlet implementation class ServletDeleteImage
+ * Servlet implementation class ServletGameDelete
  */
-@WebServlet("/admin/ServletDeleteImage")
-public class ServletDeleteImage extends HttpServlet {
+@WebServlet("/admin/ServletGameDelete")
+public class ServletGameDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ServletDeleteImage() {
+	public ServletGameDelete() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,17 +33,13 @@ public class ServletDeleteImage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if (request.getParameter("submit") != null) {
-			int gameid = Integer.parseInt(request.getParameter("gameid"));
-			GameImage Game_Image = new GameImage();
-			Game_Image.SetGameID(gameid);
-			GameImageDAO GameImage_DAO = new GameImageDAOImpl();
-			if (GameImage_DAO.RemoveGameImage(Game_Image)) {
-				response.sendRedirect("editgames.jsp?success=5");
+		if (request.getParameter("game_id") != null) {
+			GameDAO Game_Class = new GameDAOImpl();
+			if (Game_Class.DeleteGame(Integer.parseInt(request.getParameter("game_id")))) {
+				response.sendRedirect("editgames.jsp?success=2");
 			} else {
-				response.sendRedirect("editgames.jsp?fail=5");
+				response.sendRedirect("editgames.jsp?fail=2");
 			}
-
 		} else {
 			response.sendRedirect("index.jsp");
 		}

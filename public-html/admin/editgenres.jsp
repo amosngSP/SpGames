@@ -1,62 +1,33 @@
 <%@include file="header.jsp" %>
+<%@page import="htmlUtils.*" %>
       <div class="container-fluid">
         <h1 class="mt-4">Edit Genres</h1>
-               <%if (request.getParameter("success") != null){
-	if (request.getParameter("success").equals("1")){%>
-<div class="alert alert-success" style="">
-  <strong>Success!</strong> The genre has been updated!
-</div>
-<% } else if(request.getParameter("success").equals("2")) {
-	%>
-<div class="alert alert-success">
-  <strong>Success!</strong> The genre has been deleted.
-</div>	
-	<% 
-} else if(request.getParameter("success").equals("3")) {
-	
-	%>
-<div class="alert alert-success">
-  <strong>Success!</strong> The genre has been added.
-</div>		
-	<% 
-}else if(request.getParameter("success").equals("4")) {
-	
-} %>
-<div class="alert alert-success">
-  <strong>Success!</strong> The genre has been brought back from the dead.
-</div>		
-	<% 	
-	
-} else if (request.getParameter("fail")!= null){
-	if(request.getParameter("fail").equals("1")){
-		%>
-		<div class="alert alert-danger">
-  <strong>Error!</strong> Updating of genre failed as it is currently in use! 
-</div>
-		<% 
-	} else if(request.getParameter("fail").equals("2")){
-		%>
-		<div class="alert alert-danger">
-  <strong>Error!</strong> This genre is in use! Please remove it from the games that are using it in order to delete!
-</div>
-		<% 
-	} else if(request.getParameter("fail").equals("3")){
-		
-		%>
-		<div class="alert alert-danger">
-  <strong>Error!</strong> Adding of genre failed! Could there be another genre with the same name already? Was it previously deleted before? Please recover the genre name instead!
-</div>
-		<% 
-	}else if(request.getParameter("fail").equals("3")){
-		%>
-		<div class="alert alert-danger">
-  <strong>Error!</strong> Unable to bring the genre back to existence. It decided to stay dead.
-</div>
-		<% 
+<%
+
+BootstrapAlerts Alerts = new BootstrapAlerts();
+if (request.getParameter("success") != null) {
+
+	if (request.getParameter("success").equals("1")) {
+		out.print(Alerts.SuccessAlert("The genre has been updated!"));
+	} else if (request.getParameter("success").equals("2")) {
+		out.print(Alerts.SuccessAlert("The genre has been deleted."));
+	} else if (request.getParameter("success").equals("3")) {
+		out.print(Alerts.SuccessAlert("The genre has been added."));
+	} else if (request.getParameter("success").equals("4")) {
+		out.print(Alerts.SuccessAlert("The genre has been brought back from the dead."));
 	}
-	
-	
-}%>
+} else if (request.getParameter("fail") != null) {
+	if (request.getParameter("fail").equals("1")) {
+		out.print(Alerts.CritAlert("There was an error while trying to update the genre."));
+	} else if (request.getParameter("fail").equals("2")) {
+		out.print(Alerts.CritAlert("There was an error while trying to delete the genre. Is the genre still in use? If so, please diassociate the genre with the game before proceeding to delete the genre."));
+	} else if (request.getParameter("fail").equals("3")) {
+		out.print(Alerts.CritAlert("There was an error while trying to add the game."));
+	} else if (request.getParameter("fail").equals("4")) {
+		out.print(Alerts.CritAlert("Genre decided to stay dead, it thought it was playing dead."));
+	} 
+}
+%>
         <div class="addgame">
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Add Genre</button>
 <% if(request.getParameter("del")== null){%>
@@ -104,7 +75,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="add_genre.jsp" method="POST">
+      </div><form id="modal-form" action="ServletGenreAdd" method="POST">
       <div class="modal-body">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Genre Name:</label>
@@ -128,7 +99,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="update_genres.jsp" method="POST">
+      </div><form id="modal-form" action="ServletGenreUpdate" method="POST">
       <div class="modal-body">
         
         <input type="hidden" name="genre_id" id="genre-id">
@@ -154,7 +125,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="delete_genres.jsp" method="POST">
+      </div><form id="modal-form" action="ServletGenreDelete" method="POST">
         
       <div class="modal-body">
       <input type="hidden" name="genre_id" id="genre-id">
@@ -177,7 +148,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div><form id="modal-form" action="undelete_genre.jsp" method="POST">
+      </div><form id="modal-form" action="ServletGenreUnDelete" method="POST">
         
       <div class="modal-body">
       <input type="hidden" name="genre_id" id="genre-id">

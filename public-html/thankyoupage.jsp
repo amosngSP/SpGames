@@ -1,7 +1,27 @@
 
 <%@ page import="db.*"%>
 <%@ page import="java.util.ArrayList"%>
-         <% if(session.getAttribute("name")!= null){response.sendRedirect("index.jsp");} %>
+         <% if(session.getAttribute("name")== null){response.sendRedirect("index.jsp");} %>
+
+<%
+String status = request.getParameter("status");
+String title = "";
+String message = "";
+if(status != null){
+	if(status.equalsIgnoreCase("0")){
+		title = "Error";
+		message = "There was an error trying to record your purchase. Please try again later.";
+	} else if (status.equalsIgnoreCase("1")){
+		title = "Thank you for your purchase.";
+		message = "Your items will be shipped out within 10 working days.";
+	} else {
+		response.sendRedirect("index.jsp");
+	}
+	
+} else {
+	response.sendRedirect("index.jsp");
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +109,7 @@
 			<!-- row -->
 			<div class="row">
 				<div class="col-md-12">
-					<h3 class="breadcrumb-header">Thank you for your purchase.</h3>
+					<h3 class="breadcrumb-header"><%=title %></h3>
 					<ul class="breadcrumb-tree">
 						<li><a href="index.jsp">Home</a></li>
 					</ul>
@@ -108,8 +128,8 @@
 			<!-- row -->
 			<div class="row">
 				<div style="width: 80%; margin: auto; max-width: 500px;">
-				<h3>Thank you for your purchase.</h3>
-				<p>Your items will be shipped out within 10 working days.</p>
+				<h3><%=title %></h3>
+				<p><%=message %></p>
 				</div>
 			</div>
 			<!-- /row -->
